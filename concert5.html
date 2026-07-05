@@ -1,0 +1,2573 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add(("startViewTransition" in document) ? "vt-native" : "vt-fallback");</script>
+  <title>The Poster Edition — Concert Films — The Brown Print</title>
+  <meta name="description"
+    content="Concert films by The Brown Print, printed like a gig poster — marquee lights, flyer walls, tour riders, and an all-access pass with your name on it." />
+  <meta name="theme-color" content="#0a0908" />
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230c0a09'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%23f59e0b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/enhancements.css" />
+  <link rel="stylesheet" href="css/tbp-transition.css" />
+  <!-- Page faces: straight poster grotesque + typewriter for the rider -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Courier+Prime:wght@400;700&display=swap"
+    rel="stylesheet" />
+
+  <script id="tbp-arriving-init">
+    try {
+      if (sessionStorage.getItem("tbp-wipe")) {
+        document.documentElement.classList.add("tbp-arriving");
+      }
+    } catch (e) { }
+  </script>
+
+  <style>
+    /* ============================================================
+       CONCERT5 — THE POSTER EDITION
+       Old school: marquee bulbs, gig-flyer wall, tour rider paper,
+       rubber stamps, backstage pass on a lanyard.
+       Fully modern: giant kinetic type, halftone print texture,
+       neo-brutalist buttons, tight mosaic grid.
+       ============================================================ */
+
+    :root {
+      --m5-ink: #0a0908;
+      --m5-coal: #131110;
+      --m5-paper: #efe7d7;
+      --m5-paper-dark: #e0d5bd;
+      --m5-red: #e11d2e;
+      --m5-red-deep: #8f1020;
+      --m5-bulb: #ffc95e;
+      --m5-smoke: #8a8177;
+    }
+
+    html,
+    body {
+      background-color: var(--m5-ink);
+    }
+
+    body.m5-page {
+      color: var(--m5-paper);
+      overflow-x: hidden;
+    }
+
+    /* This page speaks poster-red: nav, buttons, focus rings */
+    body.m5-page .nav-link.active,
+    body.m5-page .nav-link:hover {
+      color: #ff4d4d;
+    }
+
+    body.m5-page .nav-cta {
+      background: var(--m5-red);
+      color: #fff;
+    }
+
+    body.m5-page .nav-cta:hover {
+      background: #ff4d4d;
+    }
+
+    body.m5-page .footer .btn-amber {
+      background: var(--m5-red);
+      color: #fff;
+    }
+
+    body.m5-page .footer .btn-amber:hover {
+      background: #ff4d4d;
+    }
+
+    body.m5-page a:focus-visible,
+    body.m5-page button:focus-visible {
+      outline-color: #ff4d4d;
+    }
+
+    /* ---------- PRINT TEXTURE (halftone over everything) ---------- */
+    .m5-halftone {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: radial-gradient(circle, #fff 1px, transparent 1.3px);
+      background-size: 6px 6px;
+      mix-blend-mode: overlay;
+    }
+
+    /* ---------- TYPE HELPERS ---------- */
+    .m5-anton {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .m5-kicker {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--m5-red);
+    }
+
+    .m5-h2 {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      line-height: 1.02;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--m5-paper);
+      margin: 0.6rem 0 1rem;
+    }
+
+    .m5-h2 .red {
+      color: var(--m5-red);
+      text-shadow: 0 0 26px rgba(225, 29, 46, 0.4);
+    }
+
+    .m5-lead {
+      color: var(--m5-smoke);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 42rem;
+    }
+
+    /* ============================================================
+       HERO — THE MARQUEE
+       ============================================================ */
+    .m5-hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.25rem;
+      padding: 7.5rem 1.25rem 4.5rem;
+      overflow: hidden;
+      background:
+        linear-gradient(to bottom, rgba(10, 9, 8, 0.82), rgba(10, 9, 8, 0.55) 45%, var(--m5-ink)),
+        url("media/concert3/bg1.jpeg") center 30% / cover no-repeat;
+    }
+
+    .m5-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 42%, transparent 35%, rgba(5, 4, 4, 0.75));
+      pointer-events: none;
+    }
+
+    /* the sign itself */
+    .m5-marquee {
+      position: relative;
+      z-index: 2;
+      max-width: 56rem;
+      width: min(100%, 56rem);
+      padding: clamp(1.6rem, 3.5vw, 2.4rem);
+      background: linear-gradient(180deg, #1b1510, #0c0a08);
+      border-radius: 14px;
+      box-shadow:
+        0 40px 90px rgba(0, 0, 0, 0.75),
+        0 0 70px rgba(255, 201, 94, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .m5-marquee-inner {
+      position: relative;
+      border: 2px solid rgba(255, 201, 94, 0.28);
+      border-radius: 8px;
+      padding: clamp(1.8rem, 4.5vw, 3.2rem) clamp(1.25rem, 5vw, 3.5rem);
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(255, 201, 94, 0.12), transparent 55%),
+        #0b0908;
+    }
+
+    .m5-presents {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--m5-bulb);
+      margin-bottom: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .m5-title {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 7.5vw, 5.4rem);
+      line-height: 1.02;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #f8f1e0;
+      text-shadow: 0 0 34px rgba(255, 201, 94, 0.3), 0 4px 0 rgba(0, 0, 0, 0.55);
+    }
+
+    .m5-title .red {
+      display: block;
+      color: var(--m5-red);
+      text-shadow: 0 0 30px rgba(225, 29, 46, 0.55), 0 4px 0 rgba(0, 0, 0, 0.55);
+    }
+
+    /* chasing bulbs around the sign */
+    .m5-bulbs {
+      position: absolute;
+      inset: 9px;
+      pointer-events: none;
+    }
+
+    .m5-bulb {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: #4a3418;
+      animation: m5BulbGlow 1.05s linear infinite;
+    }
+
+    @keyframes m5BulbGlow {
+
+      0%,
+      100% {
+        background: #4a3418;
+        box-shadow: none;
+      }
+
+      50% {
+        background: var(--m5-bulb);
+        box-shadow: 0 0 10px 2px rgba(255, 201, 94, 0.85);
+      }
+    }
+
+    /* TONIGHT ONLY sticker — 12-point starburst */
+    .m5-burst {
+      position: absolute;
+      top: -34px;
+      right: -18px;
+      z-index: 3;
+      width: 122px;
+      height: 122px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.1rem;
+      text-align: center;
+      background: var(--m5-red);
+      color: #fff;
+      clip-path: polygon(100% 50%, 86.7% 59.8%, 93.3% 75%, 76.9% 76.9%, 75% 93.3%, 59.8% 86.7%, 50% 100%, 40.2% 86.7%, 25% 93.3%, 23.1% 76.9%, 6.7% 75%, 13.3% 59.8%, 0% 50%, 13.3% 40.2%, 6.7% 25%, 23.1% 23.1%, 25% 6.7%, 40.2% 13.3%, 50% 0%, 59.8% 13.3%, 75% 6.7%, 76.9% 23.1%, 93.3% 25%, 86.7% 40.2%);
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      animation: m5Wobble 6s ease-in-out infinite alternate;
+      filter: drop-shadow(0 10px 22px rgba(225, 29, 46, 0.45));
+    }
+
+    .m5-burst b {
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .m5-burst small {
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      opacity: 0.9;
+    }
+
+    @keyframes m5Wobble {
+      from {
+        transform: rotate(6deg);
+      }
+
+      to {
+        transform: rotate(16deg);
+      }
+    }
+
+    /* date strip under the sign */
+    .m5-datestrip {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.4rem 1.4rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--m5-smoke);
+    }
+
+    .m5-datestrip strong {
+      color: var(--m5-paper);
+      font-weight: 400;
+    }
+
+    .m5-datestrip .sep {
+      color: var(--m5-red);
+    }
+
+    .m5-scrollcue {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--m5-smoke);
+    }
+
+    .m5-scrollcue i {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, var(--m5-red), transparent);
+      animation: m5Cue 2s ease-in-out infinite;
+    }
+
+    @keyframes m5Cue {
+
+      0%,
+      100% {
+        transform: scaleY(0.35);
+        opacity: 0.25;
+      }
+
+      50% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+
+    /* ============================================================
+       RED MARQUEE TICKER
+       ============================================================ */
+    .m5-ticker {
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.8rem 0;
+      background: linear-gradient(90deg, var(--m5-red-deep), var(--m5-red) 50%, var(--m5-red-deep));
+      border-top: 3px solid var(--m5-ink);
+      border-bottom: 3px solid var(--m5-ink);
+      box-shadow: 0 0 40px rgba(225, 29, 46, 0.25);
+      pointer-events: none;
+    }
+
+    .m5-ticker-track {
+      display: inline-flex;
+      will-change: transform;
+      animation: m5Ticker 28s linear infinite;
+    }
+
+    .m5-ticker-track>span {
+      display: inline-block;
+      padding-right: 2.4rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.3rem, 2.6vw, 2rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--m5-paper);
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes m5Ticker {
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ============================================================
+       KINETIC TYPE — rows slide against the scroll
+       ============================================================ */
+    .m5-kinetic {
+      padding: 5.5rem 0 4.5rem;
+      overflow: hidden;
+      background: var(--m5-ink);
+    }
+
+    .m5-row {
+      display: block;
+      text-align: center;
+      white-space: nowrap;
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(3rem, 9.5vw, 7.5rem);
+      line-height: 1.02;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      will-change: transform;
+    }
+
+    .m5-row--red {
+      color: var(--m5-red);
+      text-shadow: 0 0 40px rgba(225, 29, 46, 0.3);
+    }
+
+    .m5-row--outline {
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(239, 231, 215, 0.75);
+    }
+
+    .m5-row--paper {
+      color: var(--m5-paper);
+    }
+
+    @supports not (-webkit-text-stroke: 1px #fff) {
+      .m5-row--outline {
+        color: rgba(239, 231, 215, 0.35);
+      }
+    }
+
+    /* ============================================================
+       THE FLYER WALL (video grid from content.js)
+       ============================================================ */
+    .m5-section {
+      position: relative;
+      max-width: 76rem;
+      margin: 0 auto;
+      padding: 5.5rem 2rem;
+    }
+
+    .m5-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    /* rubber stamp */
+    .m5-stamp {
+      flex-shrink: 0;
+      align-self: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #ff4d4d;
+      border: 3px solid #ff4d4d;
+      border-radius: 8px;
+      padding: 0.55rem 1.1rem 0.45rem;
+      transform: rotate(-7deg);
+      opacity: 0.85;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0.12'/%3E%3C/filter%3E%3Crect width='120' height='120' fill='%23fff' filter='url(%23r)'/%3E%3C/svg%3E");
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0.12'/%3E%3C/filter%3E%3Crect width='120' height='120' fill='%23fff' filter='url(%23r)'/%3E%3C/svg%3E");
+    }
+
+    /* mosaic of taped flyers */
+    #concertGrid {
+      margin-top: 2.25rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 175px;
+      grid-auto-flow: dense;
+      gap: 1.35rem;
+    }
+
+    #concertGrid .work-card.tall {
+      grid-row: auto;
+    }
+
+    #concertGrid .work-card:nth-child(1) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    #concertGrid .work-card:nth-child(3) {
+      grid-row: span 2;
+    }
+
+    #concertGrid .work-card:nth-child(5),
+    #concertGrid .work-card:nth-child(6) {
+      grid-column: span 2;
+    }
+
+    /* flyer look: cream print border, tape, tilt */
+    body.m5-page .work-card {
+      position: relative;
+      border-radius: 3px;
+      overflow: hidden;
+      border: none;
+      background: var(--m5-paper);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.55);
+      transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease;
+    }
+
+    body.m5-page .work-card img {
+      position: absolute;
+      inset: 9px;
+      width: calc(100% - 18px);
+      height: calc(100% - 18px);
+      object-fit: cover;
+      filter: saturate(0.92) contrast(1.04);
+      transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    body.m5-page .work-card:hover img {
+      transform: scale(1.045);
+    }
+
+    #concertGrid .work-card:nth-child(odd) {
+      transform: rotate(-1.1deg);
+    }
+
+    #concertGrid .work-card:nth-child(even) {
+      transform: rotate(0.9deg);
+    }
+
+    #concertGrid .work-card:hover {
+      transform: rotate(0deg) translateY(-8px);
+      box-shadow: 0 30px 55px rgba(0, 0, 0, 0.65), 0 0 30px rgba(225, 29, 46, 0.15);
+      z-index: 4;
+    }
+
+    /* masking tape across the top of every flyer */
+    body.m5-page .work-card::before {
+      content: "";
+      position: absolute;
+      top: 1px;
+      left: 50%;
+      width: 96px;
+      height: 20px;
+      transform: translateX(-50%) rotate(-2.5deg);
+      background: rgba(240, 235, 218, 0.5);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    #concertGrid .work-card:nth-child(even)::before {
+      transform: translateX(-50%) rotate(2deg);
+    }
+
+    /* headliner corner banner on the lead flyer */
+    #concertGrid .work-card:nth-child(1)::after {
+      content: "Headliner";
+      position: absolute;
+      top: 22px;
+      left: -34px;
+      z-index: 6;
+      transform: rotate(-45deg);
+      width: 150px;
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 0.4rem 0 0.3rem;
+      background: var(--m5-red);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+    }
+
+    body.m5-page .work-card-shade {
+      position: absolute;
+      inset: 9px;
+      z-index: 2;
+      background: linear-gradient(to bottom, transparent 42%, rgba(8, 6, 5, 0.92));
+      pointer-events: none;
+    }
+
+    body.m5-page .work-card-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      z-index: 4;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    body.m5-page .work-card:hover .work-card-play {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    body.m5-page .play-btn {
+      width: 62px;
+      height: 62px;
+      background: var(--m5-red);
+      color: #fff;
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55);
+    }
+
+    body.m5-page .work-card-caption {
+      position: absolute;
+      bottom: 9px;
+      left: 9px;
+      right: 9px;
+      padding: 1.1rem 1.2rem;
+      z-index: 4;
+      pointer-events: none;
+      transform: none;
+      background: none;
+    }
+
+    body.m5-page .work-card-caption h3 {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.3rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    body.m5-page .work-card-caption .meta {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #ff6b6b;
+    }
+
+    body.m5-page .work-card-caption .sub {
+      font-size: 0.8rem;
+      color: rgba(239, 231, 215, 0.75);
+    }
+
+    /* ============================================================
+       OLD SCHOOL vs NEW SCHOOL
+       ============================================================ */
+    .m5-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: stretch;
+      margin-top: 2.5rem;
+    }
+
+    /* the tour rider — typewriter on paper */
+    .m5-rider {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.035) 0 1px, transparent 1px 28px),
+        var(--m5-paper);
+      background-size: 100% 28px, auto;
+      color: #262019;
+      border-radius: 4px;
+      padding: 2.6rem 2.4rem 2.2rem;
+      transform: rotate(-1.1deg);
+      box-shadow: 0 26px 55px rgba(0, 0, 0, 0.6);
+    }
+
+    /* two bits of tape holding the rider up */
+    .m5-rider::before,
+    .m5-rider::after {
+      content: "";
+      position: absolute;
+      top: -12px;
+      width: 92px;
+      height: 24px;
+      background: rgba(240, 235, 218, 0.55);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.28);
+    }
+
+    .m5-rider::before {
+      left: 10%;
+      transform: rotate(-5deg);
+    }
+
+    .m5-rider::after {
+      right: 10%;
+      transform: rotate(4deg);
+    }
+
+    .m5-rider h3 {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 1.7rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      color: #17130e;
+    }
+
+    .m5-rider .m5-rider-sub {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: #6b6154;
+      margin-bottom: 1.4rem;
+    }
+
+    .m5-rider ul {
+      list-style: none;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    .m5-rider li {
+      display: flex;
+      gap: 0.7rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed rgba(38, 32, 25, 0.25);
+    }
+
+    .m5-rider li:last-child {
+      border-bottom: 0;
+    }
+
+    .m5-rider li::before {
+      content: "[x]";
+      color: var(--m5-red);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .m5-rider .m5-rider-serial {
+      margin-top: 1.6rem;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8a7f6d;
+    }
+
+    .m5-rider .m5-stamp {
+      position: absolute;
+      right: 1.6rem;
+      bottom: 2.4rem;
+      transform: rotate(-14deg);
+    }
+
+    /* the modern side — dark glass spec sheet */
+    .m5-tech {
+      background: rgba(19, 17, 16, 0.72);
+      border: 1px solid rgba(239, 231, 215, 0.12);
+      border-radius: 16px;
+      padding: 2.6rem 2.4rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .m5-tech h3 {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 1.7rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--m5-paper);
+      margin-bottom: 0.4rem;
+    }
+
+    .m5-tech .m5-tech-sub {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      color: var(--m5-smoke);
+      margin-bottom: 1.2rem;
+    }
+
+    .m5-spec {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      padding: 0.95rem 0;
+      border-bottom: 1px solid rgba(239, 231, 215, 0.1);
+    }
+
+    .m5-spec:last-child {
+      border-bottom: 0;
+    }
+
+    .m5-spec b {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 1.7rem;
+      color: var(--m5-red);
+      min-width: 4.2rem;
+      text-shadow: 0 0 18px rgba(225, 29, 46, 0.35);
+    }
+
+    .m5-spec span {
+      color: rgba(239, 231, 215, 0.85);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       ALL-ACCESS PASS CTA
+       ============================================================ */
+    .m5-cta {
+      position: relative;
+      text-align: center;
+      padding: 6rem 1.5rem 7rem;
+      background: radial-gradient(circle at 50% 115%, rgba(225, 29, 46, 0.18), transparent 62%);
+      border-top: 1px solid rgba(239, 231, 215, 0.06);
+      overflow: hidden;
+    }
+
+    .m5-lanyard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem auto 2.5rem;
+      transform-origin: 50% 0;
+      animation: m5Swing 5.6s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+
+    .m5-lanyard:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes m5Swing {
+      from {
+        transform: rotate(-2.2deg);
+      }
+
+      to {
+        transform: rotate(2.2deg);
+      }
+    }
+
+    .m5-strap {
+      width: 44px;
+      height: 96px;
+      background: repeating-linear-gradient(-45deg, var(--m5-red) 0 11px, var(--m5-red-deep) 11px 22px);
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.45);
+    }
+
+    .m5-clip {
+      width: 20px;
+      height: 16px;
+      background: linear-gradient(180deg, #d8d4cc, #8f8a80);
+      border-radius: 3px;
+      margin-top: -2px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .m5-pass {
+      width: min(330px, 88vw);
+      margin-top: -2px;
+      background: linear-gradient(165deg, #191512, #0b0908 65%);
+      border: 1px solid rgba(239, 231, 215, 0.16);
+      border-radius: 16px;
+      padding: 1.5rem 1.5rem 1.3rem;
+      text-align: center;
+      box-shadow: 0 34px 70px rgba(0, 0, 0, 0.65), 0 0 34px rgba(225, 29, 46, 0.08);
+    }
+
+    .m5-pass-head {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--m5-red);
+      text-shadow: 0 0 20px rgba(225, 29, 46, 0.4);
+    }
+
+    .m5-pass-tour {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--m5-smoke);
+      margin: 0.15rem 0 1rem;
+    }
+
+    .m5-pass-photo {
+      width: 100%;
+      height: 130px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(239, 231, 215, 0.12);
+      background: url("media/concert3/bg2.jpeg") center 20% / cover no-repeat;
+      filter: grayscale(0.35) contrast(1.05);
+      margin-bottom: 1rem;
+    }
+
+    .m5-pass-name {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--m5-paper);
+    }
+
+    .m5-pass-role {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--m5-smoke);
+      margin: 0.25rem 0 1rem;
+    }
+
+    .m5-pass-barcode {
+      width: 72%;
+      height: 40px;
+      margin: 0 auto 0.5rem;
+      opacity: 0.85;
+      background:
+        repeating-linear-gradient(90deg,
+          rgba(239, 231, 215, 0.9) 0 2px, transparent 2px 4px,
+          rgba(239, 231, 215, 0.9) 4px 7px, transparent 7px 9px,
+          rgba(239, 231, 215, 0.9) 9px 10px, transparent 10px 14px);
+    }
+
+    .m5-pass-serial {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--m5-smoke);
+    }
+
+    /* neo-brutalist poster button */
+    .m5-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--m5-red);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 1.05rem 2.4rem 0.95rem;
+      border-radius: 4px;
+      box-shadow: 5px 5px 0 #000, 0 14px 34px rgba(225, 29, 46, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .m5-btn:hover {
+      background: #ff2f3f;
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 #000, 0 18px 40px rgba(225, 29, 46, 0.4);
+    }
+
+    .m5-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1023px) {
+      #concertGrid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 155px;
+      }
+
+      .m5-split {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+      }
+
+      .m5-rider {
+        transform: rotate(-0.7deg);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .m5-section {
+        padding: 3.75rem 1.25rem;
+      }
+
+      .m5-hero {
+        padding: 6.5rem 1rem 3.5rem;
+        gap: 1.75rem;
+      }
+
+      .m5-burst {
+        width: 96px;
+        height: 96px;
+        top: -26px;
+        right: -8px;
+      }
+
+      .m5-burst b {
+        font-size: 0.85rem;
+      }
+
+      .m5-kinetic {
+        padding: 3.5rem 0 3rem;
+      }
+
+      .m5-rider,
+      .m5-tech {
+        padding: 2rem 1.5rem;
+      }
+
+      .m5-rider .m5-stamp {
+        position: static;
+        display: inline-block;
+        margin-top: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #concertGrid {
+        grid-auto-rows: 130px;
+        gap: 0.9rem;
+      }
+
+      body.m5-page .work-card-caption {
+        padding: 0.8rem 0.9rem;
+      }
+
+      body.m5-page .work-card-caption h3 {
+        font-size: 0.98rem;
+      }
+
+      body.m5-page .work-card-caption .sub {
+        display: none;
+      }
+
+      #concertGrid .work-card:nth-child(1)::after {
+        display: none;
+      }
+    }
+
+    /* ============================================================
+       REDUCED MOTION — the poster stands still
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+
+      .m5-bulb {
+        animation: none !important;
+        background: var(--m5-bulb);
+        box-shadow: 0 0 8px 1px rgba(255, 201, 94, 0.6);
+      }
+
+      .m5-burst,
+      .m5-lanyard,
+      .m5-scrollcue i,
+      .m5-ticker-track {
+        animation: none !important;
+      }
+
+      .m5-row {
+        transform: none !important;
+      }
+    }
+
+    /* ============================================================
+       CONCERT3 — PREMIUM CINEMATIC SCROLL EXPERIENCE
+       Theme colors drawn straight from given stage photographs:
+         Phase 1 (Crimson)   → Deep red, ember orange, warm glow
+         Phase 2 (Spotlight) → Charcoal void, silver-grey, spotlight beam
+       ============================================================ */
+
+    :root {
+      /* Crimson Theme (1.jpeg) */
+      --c3-crimson-glow: rgba(220, 38, 38, 0.35);
+      --c3-crimson-accent: #dc2626;
+      --c3-ember: #ea580c;
+      --c3-blood-dark: #3b0705;
+
+      /* Spotlight Theme (2.jpeg) */
+      --c3-void: #060606;
+      --c3-charcoal: #121214;
+      --c3-silver-glow: rgba(245, 245, 247, 0.45);
+      --c3-silver: #d6d3d1;
+      --c3-silver-bright: #fafaf9;
+      --c3-smoke: #78716c;
+
+      /* Interactive Timeline */
+      --c3-tl-dim: rgba(255, 255, 255, 0.2);
+    }
+
+    body.c3-page {
+      color: var(--c3-silver);
+    }
+
+    /* ---------- FIXED SCROLLSTAGE BACKDROP ---------- */
+    .c3-stage-container {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      background-color: var(--c3-void);
+      pointer-events: none;
+    }
+
+    .c3-stage-img {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      will-change: transform, opacity, filter;
+    }
+
+    /* Layer 1 — Crimson base */
+    .c3-stage-img.img-crimson {
+      background-image: url("media/concert3/bg1.jpeg");
+      z-index: 1;
+    }
+
+    /* Layer 1.5 — real crowd footage blended into the crimson act. */
+    .c3-stage-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      mix-blend-mode: screen;
+      opacity: 0.45;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    /* Layer 2 — Spotlight rise */
+    .c3-stage-img.img-spotlight {
+      background-image: url("media/concert3/bg2.jpeg");
+      z-index: 2;
+      transform: translateY(100vh);
+    }
+
+    /* Dynamic overlay gradients to tie images to background colors */
+    .c3-stage-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 30%, var(--c3-crimson-glow), transparent 60%);
+      will-change: opacity, background;
+    }
+
+    /* SVG spotlight cone overlay */
+    .c3-stage-spotlight-cone {
+      position: absolute;
+      left: 50%;
+      top: -10%;
+      z-index: 4;
+      pointer-events: none;
+      width: 50vw;
+      height: 120vh;
+      transform: translateX(-50%) rotate(-10deg);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+      clip-path: polygon(48% 0, 52% 0, 75% 100%, 25% 100%);
+      filter: blur(8px);
+      opacity: 0.1;
+      mix-blend-mode: screen;
+      transform-origin: top center;
+      will-change: transform, opacity;
+    }
+
+    /* Film grain overlay texture */
+    .c3-grain-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+
+    /* ---------- FIXED TIMELINE INDICATOR ---------- */
+    .c3-timeline {
+      position: fixed;
+      left: 3rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      pointer-events: none;
+    }
+
+    .c3-timeline-line {
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: var(--c3-tl-dim);
+    }
+
+    .c3-timeline-progress {
+      position: absolute;
+      left: 7px;
+      top: 0;
+      width: 2px;
+      height: 0%;
+      background: linear-gradient(to bottom, var(--c3-crimson-accent), var(--c3-silver-bright));
+      transition: height 0.1s ease-out;
+    }
+
+    .c3-tl-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .c3-tl-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--c3-void);
+      border: 2px solid var(--c3-tl-dim);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 2;
+    }
+
+    .c3-tl-dot.active {
+      border-color: var(--c3-silver-bright);
+      background-color: var(--c3-silver-bright);
+      box-shadow: 0 0 15px var(--c3-silver-glow);
+    }
+
+    .c3-tl-item:nth-child(1) .c3-tl-dot.active {
+      border-color: var(--c3-crimson-accent);
+      background-color: var(--c3-crimson-accent);
+      box-shadow: 0 0 15px rgba(220, 38, 38, 0.6);
+    }
+
+    .c3-tl-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--c3-smoke);
+      text-transform: uppercase;
+      opacity: 0.4;
+      transform: translateX(-5px);
+      transition: all 0.4s ease;
+    }
+
+    .c3-tl-text.active {
+      opacity: 1;
+      color: var(--c3-silver-bright);
+      transform: translateX(0);
+    }
+
+    .c3-tl-item:nth-child(1) .c3-tl-text.active {
+      color: var(--c3-crimson-accent);
+    }
+
+    /* Hide the side timeline where it would overlap the content column */
+    @media (max-width: 1279px) {
+      .c3-timeline {
+        display: none;
+      }
+    }
+
+    /* ---------- FIXED CAPTIONS OVERLAYS ---------- */
+    .c3-caption-stack {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      padding: 0 1.5rem;
+    }
+
+    .c3-caption-panel {
+      max-width: 52rem;
+      position: absolute;
+      will-change: transform, opacity;
+      transition: opacity 0.1s linear, transform 0.1s linear;
+    }
+
+    .c3-kicker {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      display: inline-block;
+    }
+
+    #c3-caption-crimson .c3-kicker {
+      color: var(--c3-crimson-accent);
+      text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    }
+
+    #c3-caption-spotlight .c3-kicker {
+      color: var(--c3-silver);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .c3-title {
+      font-family: 'Anton', 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--c3-silver-bright);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .c3-title .accent-red {
+      color: var(--c3-crimson-accent);
+    }
+
+    .c3-title .accent-silver {
+      color: var(--c3-silver);
+    }
+
+    .c3-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--c3-silver);
+      max-width: 40rem;
+      margin: 0 auto;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    /* ---------- SCROLL CUE AT BOTTOM ---------- */
+    .c3-scroll-cue {
+      position: fixed;
+      left: 50%;
+      bottom: 2.5rem;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--c3-silver);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      pointer-events: none;
+      will-change: opacity, transform;
+    }
+
+    .c3-scroll-cue-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--c3-crimson-accent), transparent);
+      animation: cueLineAnim 2s ease-in-out infinite;
+    }
+
+    /* ---------- SCROLL SPACE DRIVER ---------- */
+    .c3-scroll-spacer {
+      height: 350vh;
+      position: relative;
+      pointer-events: none;
+    }
+
+    /* ---------- SCROLLABLE MAIN CONTENT ---------- */
+    .c3-main-content {
+      position: relative;
+      z-index: 20;
+      background: linear-gradient(to bottom, transparent, var(--c3-charcoal) 15vh, var(--c3-void) 50vh);
+      margin-top: -10vh;
+      /* pull it slightly up for transition overlap */
+      padding-top: 10rem;
+    }
+
+    @keyframes cueLineAnim {
+
+      0%,
+      100% {
+        transform: scaleY(0.4);
+        opacity: 0.2;
+      }
+
+      50% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+
+    /* ---------- LIGHTS-DOWN ENTRANCE ---------- */
+    .c3-lights-down {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      animation: c3LightsUp 1.9s cubic-bezier(0.6, 0, 0.3, 1) 0.2s both;
+    }
+
+    .c3-lights-down span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.6em;
+      color: var(--c3-smoke);
+      text-transform: uppercase;
+      animation: c3LightsText 1.4s ease both;
+    }
+
+    @keyframes c3LightsUp {
+
+      0%,
+      52% {
+        opacity: 1;
+      }
+
+      60% {
+        opacity: 0.5;
+      }
+
+      65% {
+        opacity: 0.9;
+      }
+
+      74% {
+        opacity: 0.2;
+      }
+
+      80% {
+        opacity: 0.45;
+      }
+
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    @keyframes c3LightsText {
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      30%,
+      68% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+    }
+
+    /* ---------- LIVE REC BADGE + TIMECODE ---------- */
+    .c3-live-badge {
+      position: fixed;
+      top: 5.25rem;
+      right: 1.5rem;
+      z-index: 30;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.95rem;
+      background: rgba(6, 6, 6, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      color: var(--c3-silver-bright);
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .c3-rec-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ff2b2b;
+      box-shadow: 0 0 10px rgba(255, 43, 43, 0.9);
+      animation: c3RecBlink 1.6s steps(1) infinite;
+    }
+
+    @keyframes c3RecBlink {
+      50% {
+        opacity: 0.25;
+      }
+    }
+
+    .c3-timecode {
+      font-family: 'Inter', sans-serif;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      color: var(--c3-silver);
+    }
+
+    .c3-eq {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+
+    .c3-eq i {
+      width: 3px;
+      background: var(--c3-crimson-accent);
+      border-radius: 1px;
+      transform-origin: bottom;
+      animation: c3Eq 0.8s ease-in-out infinite alternate;
+    }
+
+    .c3-eq i:nth-child(1) {
+      height: 45%;
+      animation-duration: 0.72s;
+    }
+
+    .c3-eq i:nth-child(2) {
+      height: 95%;
+      animation-duration: 0.58s;
+      animation-delay: 0.12s;
+    }
+
+    .c3-eq i:nth-child(3) {
+      height: 62%;
+      animation-duration: 0.87s;
+      animation-delay: 0.05s;
+    }
+
+    .c3-eq i:nth-child(4) {
+      height: 82%;
+      animation-duration: 0.64s;
+      animation-delay: 0.2s;
+    }
+
+    @keyframes c3Eq {
+      from {
+        transform: scaleY(0.25);
+      }
+
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    /* ---------- DRIFTING STAGE HAZE ---------- */
+    .c3-haze {
+      position: absolute;
+      z-index: 3;
+      width: 90vw;
+      height: 70vh;
+      border-radius: 50%;
+      filter: blur(70px);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .c3-haze--warm {
+      left: -25vw;
+      bottom: -30vh;
+      background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.3), transparent 65%);
+      animation: c3Haze1 26s ease-in-out infinite alternate;
+    }
+
+    .c3-haze--cool {
+      right: -25vw;
+      bottom: -35vh;
+      background: radial-gradient(ellipse at center, rgba(226, 232, 240, 0.13), transparent 65%);
+      animation: c3Haze2 34s ease-in-out infinite alternate;
+    }
+
+    @keyframes c3Haze1 {
+      to {
+        transform: translate(9vw, -6vh) scale(1.15);
+      }
+    }
+
+    @keyframes c3Haze2 {
+      to {
+        transform: translate(-11vw, -4vh) scale(1.2);
+      }
+    }
+
+    /* ---------- SWEEPING SIDE BEAMS ---------- */
+    .c3-beam-sweep {
+      position: absolute;
+      top: -12%;
+      width: 13vw;
+      height: 130vh;
+      z-index: 4;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.06) 55%, transparent);
+      clip-path: polygon(46% 0, 54% 0, 96% 100%, 4% 100%);
+      filter: blur(12px);
+      mix-blend-mode: screen;
+      transform-origin: top center;
+      opacity: var(--c3-beam-opacity, 0.08);
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .c3-beam-sweep--l {
+      left: 14%;
+      animation: c3SweepL 9s ease-in-out infinite alternate;
+    }
+
+    .c3-beam-sweep--r {
+      right: 14%;
+      animation: c3SweepR 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes c3SweepL {
+      from {
+        transform: rotate(-16deg);
+      }
+
+      to {
+        transform: rotate(12deg);
+      }
+    }
+
+    @keyframes c3SweepR {
+      from {
+        transform: rotate(15deg);
+      }
+
+      to {
+        transform: rotate(-11deg);
+      }
+    }
+
+    /* ---------- EMBER / DUST PARTICLES ---------- */
+    .c3-particles {
+      position: fixed;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    /* ---------- THE CROWD YOU'RE STANDING IN ---------- */
+    .c3-crowd {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: clamp(120px, 20vh, 220px);
+      z-index: 7;
+      pointer-events: none;
+    }
+
+    .c3-crowd svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .c3-crowd-row {
+      animation: c3Sway 7s ease-in-out infinite alternate;
+    }
+
+    .c3-crowd-row--back {
+      animation-duration: 9.5s;
+      animation-delay: -3s;
+    }
+
+    @keyframes c3Sway {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(5px);
+      }
+    }
+
+    .c3-phone-light {
+      animation: c3PhoneFlicker 3.2s ease-in-out infinite;
+    }
+
+    @keyframes c3PhoneFlicker {
+
+      0%,
+      100% {
+        opacity: 0.35;
+      }
+
+      50% {
+        opacity: 0.95;
+      }
+    }
+
+    /* ---------- VERTICAL EDGE LABEL (wide screens) ---------- */
+    .c3-edge-label {
+      position: fixed;
+      right: 1.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 8;
+      writing-mode: vertical-rl;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(250, 250, 249, 0.35);
+      pointer-events: none;
+      display: none;
+    }
+
+    @media (min-width: 1280px) {
+      .c3-edge-label {
+        display: block;
+      }
+    }
+
+    /* ---------- BIG TYPE: phase numbers, neon accents, letters ---------- */
+    .c3-caption-panel {
+      z-index: 0;
+      /* give the giant number a stacking context to sit behind text */
+    }
+
+    .c3-phase-num {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -58%);
+      z-index: -1;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(11rem, 30vw, 22rem);
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(250, 250, 249, 0.13);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    #c3-caption-crimson .c3-phase-num {
+      -webkit-text-stroke-color: rgba(220, 38, 38, 0.2);
+    }
+
+    .c3-title .accent-red {
+      text-shadow: 0 0 18px rgba(220, 38, 38, 0.65), 0 0 60px rgba(220, 38, 38, 0.35);
+      animation: c3Neon 7s linear infinite;
+    }
+
+    .c3-title .accent-silver {
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.5), 0 0 55px rgba(255, 255, 255, 0.25);
+      animation: c3Neon 8.5s linear infinite;
+    }
+
+    @keyframes c3Neon {
+
+      0%,
+      88%,
+      91%,
+      95%,
+      100% {
+        opacity: 1;
+      }
+
+      89% {
+        opacity: 0.55;
+      }
+
+      93% {
+        opacity: 0.75;
+      }
+    }
+
+    .c3-word {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .c3-ch {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(0.6em) rotate(4deg);
+      animation: c3ChIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--ci) * 45ms + var(--cd, 0.3s));
+    }
+
+    @keyframes c3ChIn {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .c3-live-badge {
+        top: 4.4rem;
+        right: 1rem;
+        padding: 0.35rem 0.75rem;
+        gap: 0.45rem;
+      }
+
+      .c3-haze {
+        filter: blur(46px);
+      }
+
+      .c3-caption-panel {
+        padding: 0 0.25rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .c3-scroll-spacer {
+        display: none;
+      }
+
+      .c3-stage-container {
+        position: relative;
+        height: 80vh;
+      }
+
+      .c3-stage-img.img-spotlight {
+        transform: translateY(0);
+        opacity: 0.5;
+      }
+
+      .c3-caption-stack {
+        position: absolute;
+        height: 100%;
+      }
+
+      #c3-caption-crimson {
+        display: none;
+      }
+
+      #c3-caption-spotlight {
+        position: relative;
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+      }
+
+      .c3-main-content {
+        margin-top: 0;
+        padding-top: 4rem;
+      }
+
+      .c3-scroll-cue {
+        display: none;
+      }
+
+      .c3-lights-down,
+      .c3-particles,
+      .c3-followspot,
+      .c3-crowd,
+      .c3-live-badge,
+      .c3-edge-label,
+      .c3-stage-video {
+        display: none !important;
+      }
+
+      .c3-haze,
+      .c3-beam-sweep,
+      .c3-crowd-row,
+      .c3-eq i,
+      .c3-rec-dot,
+      .c3-phone-light,
+      .c3-title .accent-red,
+      .c3-title .accent-silver,
+      .c3-ch {
+        animation: none !important;
+      }
+
+      .c3-ch {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="concerts" class="m5-page c3-page">
+  <div class="grain"></div>
+  <div class="m5-halftone" aria-hidden="true"></div>
+
+  <!-- ============ LIGHTS-DOWN ENTRANCE ============ -->
+  <div class="c3-lights-down" id="c3-lights" aria-hidden="true"><span>Lights Down</span></div>
+
+  <!-- ============ FIXED STAGE BACKDROP LAYER ============ -->
+  <div class="c3-stage-container" id="c3-stage">
+    <div class="c3-stage-img img-crimson" id="c3-img-crimson"></div>
+    <video class="c3-stage-video" id="c3-stage-video" muted loop playsinline autoplay preload="metadata"
+      controlslist="nodownload" disablepictureinpicture aria-hidden="true">
+      <source src="concert.mp4" type="video/mp4" />
+    </video>
+    <div class="c3-stage-img img-spotlight" id="c3-img-spotlight"></div>
+    <div class="c3-haze c3-haze--warm"></div>
+    <div class="c3-haze c3-haze--cool"></div>
+    <div class="c3-stage-overlay" id="c3-overlay"></div>
+    <div class="c3-stage-spotlight-cone" id="c3-spotlight"></div>
+    <div class="c3-beam-sweep c3-beam-sweep--l"></div>
+    <div class="c3-beam-sweep c3-beam-sweep--r"></div>
+  </div>
+
+  <div class="c3-grain-overlay"></div>
+
+  <!-- ============ EMBERS, CROWD & LIVE HUD ============ -->
+  <canvas class="c3-particles" id="c3-particles" aria-hidden="true"></canvas>
+  <div class="c3-crowd" id="c3-crowd" aria-hidden="true"></div>
+  <div class="c3-live-badge" id="c3-live-badge" aria-hidden="true">
+    <span class="c3-rec-dot"></span>
+    <span>Live</span>
+    <span class="c3-eq"><i></i><i></i><i></i><i></i></span>
+    <span class="c3-timecode" id="c3-timecode">00:00:00:00</span>
+  </div>
+  <div class="c3-edge-label" aria-hidden="true" id="c3-edge-label">Live from Toronto &middot; Multi-cam &middot; 4K HDR
+  </div>
+
+  <!-- ============ FIXED SIDE TIMELINE ============ -->
+  <div class="c3-timeline">
+    <div class="c3-timeline-line"></div>
+    <div class="c3-timeline-progress" id="c3-tl-progress-bar"></div>
+
+    <div class="c3-tl-item">
+      <div class="c3-tl-dot active"></div>
+      <span class="c3-tl-text active">Crimson Stage</span>
+    </div>
+    <div class="c3-tl-item">
+      <div class="c3-tl-dot"></div>
+      <span class="c3-tl-text">Spotlight Beam</span>
+    </div>
+    <div class="c3-tl-item">
+      <div class="c3-tl-dot"></div>
+      <span class="c3-tl-text">Showcase Films</span>
+    </div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo bebas">THE BROWN PRINT</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="wedding.html" class="nav-link">Weddings</a>
+        <a href="music.html" class="nav-link">Music</a>
+        <a href="concerts.html" class="nav-link active">Concerts</a>
+        <a href="social.html" class="nav-link">Social</a>
+        <a href="brands.html" class="nav-link">Brands</a>
+        <button class="nav-cta" onclick="openProject('concert')">Start a Project</button>
+      </div>
+      <button class="nav-burger" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+      </button>
+    </div>
+    <div class="nav-mobile">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="wedding.html" class="nav-link">Weddings</a>
+      <a href="music.html" class="nav-link">Music</a>
+      <a href="concerts.html" class="nav-link active">Concerts</a>
+      <a href="social.html" class="nav-link">Social</a>
+      <a href="brands.html" class="nav-link">Brands</a>
+      <button class="nav-cta" onclick="openProject('concert')">Start a Project</button>
+    </div>
+  </nav>
+
+  <!-- ============ PINNED CAPTIONS STACK ============ -->
+  <div class="c3-caption-stack">
+    <!-- Crimson wash caption -->
+    <div class="c3-caption-panel" id="c3-caption-crimson">
+      <span class="c3-phase-num" aria-hidden="true">01</span>
+      <span class="c3-kicker">01 — Phase One</span>
+      <h1 class="c3-title" id="c3-title-main">Bathed in <span class="accent-red">Crimson</span></h1>
+      <p class="c3-subtitle">The warm roar of the stage lights, the haze, and the silhouette of sound. We capture the
+        raw, unscripted emotion of the stage wash.</p>
+    </div>
+    <!-- Spotlight beam caption -->
+    <div class="c3-caption-panel" id="c3-caption-spotlight" style="opacity: 0; visibility: hidden;">
+      <span class="c3-phase-num" aria-hidden="true">02</span>
+      <span class="c3-kicker">02 — Phase Two</span>
+      <h2 class="c3-title">Into the <span class="accent-silver">Light</span></h2>
+      <p class="c3-subtitle">One sharp spotlight, one single voice. A silver beam piercing the silence. Every angle and
+        frame frozen in sharp, cinematic contrast.</p>
+    </div>
+  </div>
+
+  <!-- Scroll Cue -->
+  <div class="c3-scroll-cue" id="c3-scroll-cue">
+    <span>Scroll Down</span>
+    <span class="c3-scroll-cue-line"></span>
+  </div>
+
+  <!-- Tall driver that determines the scroll duration for animation -->
+  <div class="c3-scroll-spacer"></div>
+
+  <!-- ============ SCROLLABLE WRAPPER CONTENT ============ -->
+  <div class="c3-main-content">
+
+    <!-- ============ RED TICKER ============ -->
+    <div class="m5-ticker" aria-hidden="true">
+      <div class="m5-ticker-track">
+        <span>LOUD FOREVER &times; FRONT ROW &times; SHOT FROM THE PIT &times; MIXED AT THE BOARD &times; THE BROWN
+          PRINT
+          &times; LOUD FOREVER &times; FRONT ROW &times; SHOT FROM THE PIT &times; MIXED AT THE BOARD &times; THE BROWN
+          PRINT &times;&nbsp;</span>
+        <span>LOUD FOREVER &times; FRONT ROW &times; SHOT FROM THE PIT &times; MIXED AT THE BOARD &times; THE BROWN
+          PRINT
+          &times; LOUD FOREVER &times; FRONT ROW &times; SHOT FROM THE PIT &times; MIXED AT THE BOARD &times; THE BROWN
+          PRINT &times;&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- ============ KINETIC TYPE ============ -->
+    <section class="m5-kinetic" id="m5Kinetic">
+      <span class="m5-row m5-row--red">Shot from the pit &#8226; Shot from the pit &#8226; Shot from the pit</span>
+      <span class="m5-row m5-row--outline">Mixed at the board &#8226; Mixed at the board &#8226; Mixed at the
+        board</span>
+      <span class="m5-row m5-row--paper">Cut to the beat &#8226; Cut to the beat &#8226; Cut to the beat</span>
+    </section>
+
+    <!-- ============ THE FLYER WALL ============ -->
+    <section class="m5-section">
+      <div class="m5-head">
+        <div>
+          <span class="m5-kicker">Live Showcase</span>
+          <h2 class="m5-h2">The Flyer <span class="red">Wall</span></h2>
+          <p class="m5-lead">Every show we film ends up here — taped up, a little crooked, and impossible to walk past.
+            Press play on any of them.</p>
+        </div>
+        <span class="m5-stamp" aria-hidden="true">Fresh from the pit</span>
+      </div>
+
+      <!-- Populated by content.js + js/main.js -->
+      <div id="concertGrid">
+        <div
+          style="grid-column: 1/-1; padding: 4rem; text-align: center; color: var(--m5-smoke); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.8rem;">
+          Loading the wall&hellip;
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OLD SCHOOL vs NEW SCHOOL ============ -->
+    <section class="m5-section" style="padding-top: 1.5rem;">
+      <span class="m5-kicker">How we work</span>
+      <h2 class="m5-h2">Old school manners.<br /><span class="red">New school machines.</span></h2>
+
+      <div class="m5-split">
+        <div class="m5-rider">
+          <h3>The Tour Rider</h3>
+          <p class="m5-rider-sub">// house rules, non-negotiable</p>
+          <ul>
+            <li>Load in before noon. Walk the room. Find the light.</li>
+            <li>Tape the setlist. Mark the solos and the drops.</li>
+            <li>Never block a sightline. The fans came first.</li>
+            <li>Roll on the crowd between songs — that's the story.</li>
+            <li>The encore is sacred. Nobody moves, everybody films.</li>
+          </ul>
+          <p class="m5-rider-serial">Tour rider N&ordm; 047 &mdash; Toronto, ON &mdash; The Brown Print</p>
+          <span class="m5-stamp" aria-hidden="true">FOH Approved</span>
+        </div>
+
+        <div class="m5-tech">
+          <h3>The Spec Sheet</h3>
+          <p class="m5-tech-sub">What actually rolls into your venue.</p>
+          <div class="m5-spec"><b>8</b><span>cameras rolling all night — pit, rail, jib, and the balcony wide nobody
+              remembers to shoot.</span></div>
+          <div class="m5-spec"><b>TC</b><span>every frame timecode-locked to the soundboard feed, so the edit snaps to
+              the mix.</span></div>
+          <div class="m5-spec"><b>4K</b><span>HDR master plus vertical cuts for socials — the encore fits in a
+              story.</span></div>
+          <div class="m5-spec"><b>48h</b><span>teaser in your inbox before the bruises from the pit fade.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ALL-ACCESS PASS CTA ============ -->
+    <section class="m5-cta">
+      <span class="m5-kicker">All Access</span>
+      <h2 class="m5-h2">Your name on <span class="red">the door</span></h2>
+      <p class="m5-lead" style="margin: 0 auto;">Tell us about the show. We'll bring the cameras, the board feed, and
+        the
+        patience to wait for the encore. Your laminate is already printed:</p>
+
+      <div class="m5-lanyard">
+        <div class="m5-strap" aria-hidden="true"></div>
+        <div class="m5-clip" aria-hidden="true"></div>
+        <div class="m5-pass">
+          <div class="m5-pass-head">All Access</div>
+          <div class="m5-pass-tour">The Brown Print &mdash; Season 2026</div>
+          <div class="m5-pass-photo" aria-hidden="true"></div>
+          <div class="m5-pass-name">Your Show</div>
+          <div class="m5-pass-role">Headliner &middot; Any City</div>
+          <div class="m5-pass-barcode" aria-hidden="true"></div>
+          <div class="m5-pass-serial">N&ordm; 0001 &middot; never expires</div>
+        </div>
+      </div>
+
+      <button class="m5-btn" onclick="openProject('concert')">
+        Start a Concert Project
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>
+            <span class="footer-logo bebas">THE BROWN PRINT</span>
+            <p>A Punjabi-rooted studio in Canada crafting cinematic weddings, music albums, and concert films.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="wedding.html">Weddings</a>
+            <a href="music.html">Music Albums</a>
+            <a href="concerts.html">Concerts</a>
+            <a href="social.html">Social Events</a>
+            <a href="brands.html">Brands</a>
+          </div>
+          <div class="footer-col">
+            <h4>Get in touch</h4>
+            <a href="mailto:hello@thebrownprint.ca"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-10 5L2 7" />
+              </svg> hello@thebrownprint.ca</a>
+            <a href="tel:+14165550199"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+              </svg> +1 (416) 555-0199</a>
+            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg> Toronto, Canada</span>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <button class="btn btn-amber" onclick="openProject()">Start a Project <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></button>
+          <p class="copy">© 2026 The Brown Print · Crafted with intention</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============ CORE SCRIPTS ============ -->
+  <script src="content.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/enhance.js"></script>
+  <script src="js/tbp-transition.js"></script>
+
+  <!-- ============ CUSTOM SCROLL ANIMATION ENGINE ============ -->
+  <script>
+    (function () {
+      const imgCrimson = document.getElementById("c3-img-crimson");
+      const imgSpotlight = document.getElementById("c3-img-spotlight");
+      const overlay = document.getElementById("c3-overlay");
+      const spotlight = document.getElementById("c3-spotlight");
+
+      const captionCrimson = document.getElementById("c3-caption-crimson");
+      const captionSpotlight = document.getElementById("c3-caption-spotlight");
+      const scrollSpacer = document.querySelector(".c3-scroll-spacer");
+      const cue = document.getElementById("c3-scroll-cue");
+
+      const tlDots = document.querySelectorAll(".c3-tl-dot");
+      const tlTexts = document.querySelectorAll(".c3-tl-text");
+      const tlProgress = document.getElementById("c3-tl-progress-bar");
+      const timeline = document.querySelector(".c3-timeline");
+
+      const stage = document.getElementById("c3-stage");
+      const crowd = document.getElementById("c3-crowd");
+      const badge = document.getElementById("c3-live-badge");
+      const edgeLabel = document.getElementById("c3-edge-label");
+      const particles = document.getElementById("c3-particles");
+      const stageVideo = document.getElementById("c3-stage-video");
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // the crowd-footage loop is pure atmosphere: drop it entirely for
+      // reduced motion or Save-Data connections
+      if (stageVideo && (prefersReduced || (navigator.connection && navigator.connection.saveData))) {
+        stageVideo.remove();
+      }
+
+      if (!imgCrimson || !imgSpotlight || !scrollSpacer) return;
+      if (prefersReduced) return;
+
+      const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
+      const lerp = (start, end, t) => start + (end - start) * t;
+      const ease = (t) => t * t * (3 - 2 * t); // smoothstep easing function
+
+      let ticking = false;
+
+      function update() {
+        const rect = scrollSpacer.getBoundingClientRect();
+        const totalHeight = scrollSpacer.offsetHeight - window.innerHeight;
+        const scrolled = clamp(-rect.top, 0, totalHeight);
+        const p = totalHeight > 0 ? scrolled / totalHeight : 0;
+
+        // Transition starts at p = 0.15 and finishes at p = 0.75
+        const tProgress = ease(clamp((p - 0.15) / 0.60, 0, 1));
+
+        // 1. Parallax background image translate and scale
+        // Image 2 slides up from 100vh to 0px
+        imgSpotlight.style.transform = "translateY(" + ((1 - tProgress) * 100) + "vh) scale(" + lerp(1.1, 1.0, tProgress) + ")";
+
+        // Image 1 slides up slightly and zooms down, dims and gets blurred
+        imgCrimson.style.transform = "translateY(" + (-tProgress * 15) + "vh) scale(" + lerp(1.05, 0.98, tProgress) + ")";
+        imgCrimson.style.filter = "brightness(" + lerp(1.0, 0.35, tProgress) + ") blur(" + lerp(0, 5, tProgress) + "px)";
+
+        // 2. Dynamic gradient shift
+        overlay.style.opacity = lerp(0.9, 0.45, tProgress);
+        overlay.style.background = "radial-gradient(circle at " + lerp(50, 45, tProgress) + "% " + lerp(30, 20, tProgress) + "%, rgba(220, 38, 38, " + lerp(0.35, 0.05, tProgress) + "), transparent 65%)";
+
+        // 3. Spotlight beam sweeps in
+        spotlight.style.opacity = lerp(0.1, 0.85, tProgress);
+        spotlight.style.transform = "translateX(-50%) rotate(" + lerp(-12, 0, tProgress) + "deg) scaleX(" + lerp(0.7, 1.0, tProgress) + ")";
+
+        // 4. Caption stack cross-fade and lift
+        // Crimson fades out over 0.0 -> 0.4
+        const cap1Opacity = 1 - ease(clamp(p / 0.4, 0, 1));
+        const cap1Translate = -p * 60;
+        captionCrimson.style.opacity = cap1Opacity.toFixed(3);
+        captionCrimson.style.transform = "translateY(" + cap1Translate + "px)";
+        captionCrimson.style.visibility = cap1Opacity === 0 ? "hidden" : "visible";
+
+        // Spotlight fades in over 0.4 -> 0.75
+        const cap2Opacity = ease(clamp((p - 0.4) / 0.35, 0, 1));
+        const cap2Translate = (1 - cap2Opacity) * 60;
+        captionSpotlight.style.opacity = cap2Opacity.toFixed(3);
+        captionSpotlight.style.transform = "translateY(" + cap2Translate + "px)";
+        captionSpotlight.style.visibility = cap2Opacity === 0 ? "hidden" : "visible";
+
+        // 5. Timeline highlight checks
+        tlProgress.style.height = (p * 100) + "%";
+
+        let activeIdx = 0;
+        if (p >= 0.8) {
+          activeIdx = 2; // Showcase Films active
+        } else if (p >= 0.35) {
+          activeIdx = 1; // Spotlight Beam active
+        } else {
+          activeIdx = 0; // Crimson Stage active
+        }
+
+        tlDots.forEach((dot, idx) => {
+          if (idx === activeIdx) dot.classList.add("active");
+          else dot.classList.remove("active");
+        });
+
+        tlTexts.forEach((text, idx) => {
+          if (idx === activeIdx) text.classList.add("active");
+          else text.classList.remove("active");
+        });
+
+        // Timeline hands off to the content: fade it out at the very end
+        if (timeline) {
+          timeline.style.opacity = (1 - ease(clamp((p - 0.88) / 0.12, 0, 1))).toFixed(3);
+        }
+
+        // Atmosphere: hand the phase to the particle engine, brighten the
+        // side beams for the spotlight act, and clear the crowd + live HUD
+        // as the showcase content arrives.
+        window.__c3Phase = tProgress;
+        if (stage) stage.style.setProperty("--c3-beam-opacity", lerp(0.07, 0.5, tProgress).toFixed(3));
+        const stageFade = 1 - ease(clamp((p - 0.78) / 0.18, 0, 1));
+        [crowd, badge, edgeLabel, particles].forEach((el) => {
+          if (el) el.style.opacity = stageFade.toFixed(3);
+        });
+
+        // crowd footage: alive through the crimson act, gone with the spotlight
+        if (stageVideo && stageVideo.isConnected) {
+          stageVideo.style.opacity = (lerp(0.45, 0, tProgress) * stageFade).toFixed(3);
+          const offStage = tProgress > 0.95 || stageFade <= 0.02;
+          if (offStage && !stageVideo.paused) stageVideo.pause();
+          else if (!offStage && stageVideo.paused) stageVideo.play().catch(() => { });
+        }
+
+        // 6. Scroll cue fading out early on scroll
+        if (cue) {
+          cue.style.opacity = clamp(1 - p * 6, 0, 1).toFixed(3);
+          cue.style.transform = "translateX(-50%) translateY(" + (p * 20) + "px)";
+        }
+
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      // browsers pause muted background video; pick the loop back up
+      // (and re-sync every stage layer) when the tab returns
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) onScroll();
+      });
+      update();
+    })();
+  </script>
+
+  <!-- ============ ATMOSPHERE ENGINE (crowd, embers, HUD, type) ============ -->
+  <script>
+    (function () {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* ---- lights-down entrance: plays once per session ---- */
+      const lights = document.getElementById("c3-lights");
+      let lightsPlayed = false;
+      if (lights) {
+        let seen = false;
+        try { seen = sessionStorage.getItem("c3-lights-seen") === "1"; } catch (e) { }
+        if (reduced || seen) {
+          lights.remove();
+        } else {
+          lightsPlayed = true;
+          try { sessionStorage.setItem("c3-lights-seen", "1"); } catch (e) { }
+          lights.addEventListener("animationend", function (e) {
+            if (e.target === lights) lights.remove();
+          });
+        }
+      }
+
+      /* ---- staggered letter reveal on the opening title ---- */
+      const title = document.getElementById("c3-title-main");
+      if (title && !reduced) {
+        title.style.setProperty("--cd", lightsPlayed ? "1.15s" : "0.3s");
+        let ci = 0;
+        (function split(node) {
+          Array.from(node.childNodes).forEach(function (child) {
+            if (child.nodeType === 3) {
+              const frag = document.createDocumentFragment();
+              // keep whole words in nowrap wrappers so lines only break
+              // at real spaces, never mid-word
+              child.textContent.split(/(\s+)/).forEach(function (part) {
+                if (!part) return;
+                if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+                const word = document.createElement("span");
+                word.className = "c3-word";
+                Array.from(part).forEach(function (ch) {
+                  const s = document.createElement("span");
+                  s.className = "c3-ch";
+                  s.style.setProperty("--ci", ci++);
+                  s.textContent = ch;
+                  word.appendChild(s);
+                });
+                frag.appendChild(word);
+              });
+              node.replaceChild(frag, child);
+            } else if (child.nodeType === 1) {
+              split(child);
+            }
+          });
+        })(title);
+      }
+
+      /* ---- running timecode on the LIVE badge (24 fps) ---- */
+      const tc = document.getElementById("c3-timecode");
+      if (tc && !reduced) {
+        const t0 = performance.now();
+        const pad = function (n) { return String(n).padStart(2, "0"); };
+        let lastFrame = -1;
+        (function tick(now) {
+          const el = (now - t0) / 1000;
+          const f = Math.floor(el * 24) % 24;
+          if (f !== lastFrame) {
+            lastFrame = f;
+            tc.textContent =
+              pad(Math.floor(el / 3600)) + ":" + pad(Math.floor(el / 60) % 60) + ":" +
+              pad(Math.floor(el) % 60) + ":" + pad(f);
+          }
+          requestAnimationFrame(tick);
+        })(t0);
+      }
+
+      /* ---- the crowd you're standing in (generated silhouette) ----
+         Deterministic pseudo-random: organic shapes, identical every load. */
+      const crowdWrap = document.getElementById("c3-crowd");
+      if (crowdWrap) {
+        const W = 1440, H = 220;
+        let seed = 7;
+        const rnd = function () { return (seed = (seed * 16807) % 2147483647) / 2147483647; };
+
+        function row(baseY, rMin, rMax, step, fill, cls) {
+          let shapes = "";
+          const arms = [];
+          let x = -20;
+          while (x < W + 20) {
+            const r = rMin + rnd() * (rMax - rMin);
+            const cy = baseY + rnd() * 14;
+            shapes += '<circle cx="' + x.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + r.toFixed(1) + '"/>';
+            shapes += '<rect x="' + (x - r * 1.6).toFixed(1) + '" y="' + (cy + r * 0.55).toFixed(1) +
+              '" width="' + (r * 3.2).toFixed(1) + '" height="' + H + '" rx="' + (r * 0.9).toFixed(1) + '"/>';
+            if (rnd() > 0.72) {
+              arms.push({
+                x: x + (rnd() - 0.5) * 2 * r,
+                top: cy - r - (26 + rnd() * 30),
+                len: 26 + rnd() * 30,
+                tilt: (rnd() - 0.5) * 24,
+                phone: rnd() > 0.5
+              });
+            }
+            x += step * (0.75 + rnd() * 0.6);
+          }
+          let armShapes = "", phones = "";
+          arms.forEach(function (a) {
+            const pivot = a.x.toFixed(1) + " " + (a.top + a.len).toFixed(1);
+            armShapes += '<rect x="' + (a.x - 2.6).toFixed(1) + '" y="' + a.top.toFixed(1) +
+              '" width="5.2" height="' + (a.len + 14).toFixed(1) + '" rx="2.6" transform="rotate(' +
+              a.tilt.toFixed(1) + " " + pivot + ')"/>';
+            if (a.phone) {
+              phones += '<circle class="c3-phone-light" cx="' + a.x.toFixed(1) + '" cy="' + a.top.toFixed(1) +
+                '" r="3.2" fill="#ffe9c4" transform="rotate(' + a.tilt.toFixed(1) + " " + pivot +
+                ')" style="animation-delay:' + (rnd() * 3).toFixed(2) + 's"/>';
+            }
+          });
+          return '<g class="c3-crowd-row ' + cls + '" fill="' + fill + '">' + shapes + armShapes + "</g>" +
+            '<g class="c3-crowd-row ' + cls + '" filter="url(#c3-glow)">' + phones + "</g>";
+        }
+
+        crowdWrap.innerHTML =
+          '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">' +
+          '<defs><filter id="c3-glow" x="-200%" y="-200%" width="500%" height="500%">' +
+          '<feGaussianBlur stdDeviation="2.2"/></filter></defs>' +
+          row(96, 14, 20, 52, "rgba(10,10,12,0.82)", "c3-crowd-row--back") +
+          row(132, 18, 26, 64, "#040404", "") +
+          "</svg>";
+      }
+
+      /* ---- ember / dust particles (crimson act -> silver act) ---- */
+      const pCanvas = document.getElementById("c3-particles");
+      if (pCanvas && !reduced) {
+        const ctx = pCanvas.getContext("2d");
+        const N = window.matchMedia("(max-width: 767px)").matches ? 38 : 72;
+        let w, h;
+        const parts = [];
+
+        function resize() {
+          w = pCanvas.width = window.innerWidth;
+          h = pCanvas.height = window.innerHeight;
+        }
+
+        function spawn(p) {
+          p.x = Math.random() * w;
+          p.y = h + 10 + Math.random() * 40;
+          p.r = 0.6 + Math.random() * 1.9;
+          p.vy = 0.25 + Math.random() * 0.55;
+          p.vx = (Math.random() - 0.5) * 0.3;
+          p.a = 0.25 + Math.random() * 0.55;
+          p.tw = 1 + Math.random() * 3;
+          p.ph = Math.random() * Math.PI * 2;
+          return p;
+        }
+
+        resize();
+        window.addEventListener("resize", resize);
+        for (let i = 0; i < N; i++) {
+          const p = spawn({});
+          p.y = Math.random() * h; // scatter the first wave
+          parts.push(p);
+        }
+
+        let running = true;
+        document.addEventListener("visibilitychange", function () {
+          const wasRunning = running;
+          running = !document.hidden;
+          if (running && !wasRunning) requestAnimationFrame(loop);
+        });
+
+        function loop(t) {
+          if (!running) return;
+          // the scroll engine fades this layer out under the content;
+          // skip the drawing work while it's invisible
+          if (parseFloat(pCanvas.style.opacity || "1") > 0.02) {
+            ctx.clearRect(0, 0, w, h);
+            const mix = window.__c3Phase || 0; // 0 = crimson embers, 1 = silver dust
+            const R = Math.round(255 - 20 * mix);
+            const G = Math.round(120 + 115 * mix);
+            const B = Math.round(60 + 180 * mix);
+            ctx.fillStyle = "rgb(" + R + "," + G + "," + B + ")";
+            for (let i = 0; i < parts.length; i++) {
+              const p = parts[i];
+              p.y -= p.vy;
+              p.x += p.vx + Math.sin(t / 1400 + p.ph) * 0.15;
+              if (p.y < -12 || p.x < -12 || p.x > w + 12) spawn(p);
+              ctx.globalAlpha = p.a * (0.55 + 0.45 * Math.sin(t / (320 * p.tw) + p.ph));
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+              ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+          }
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+      }
+
+      /* ---- followspot over the showcase grid (pointer devices) ---- */
+      const spot = document.getElementById("c3-followspot");
+      if (spot && !reduced && window.matchMedia("(hover: hover)").matches) {
+        const sec = spot.parentElement;
+        sec.addEventListener("pointermove", function (e) {
+          const r = sec.getBoundingClientRect();
+          spot.style.opacity = "1";
+          spot.style.transform = "translate(" + (e.clientX - r.left) + "px, " + (e.clientY - r.top) + "px)";
+        });
+        sec.addEventListener("pointerleave", function () {
+          spot.style.opacity = "0";
+        });
+      }
+    })();
+  </script>
+
+  <!-- ============ KINETIC TYPE ENGINE ============ -->
+  <script>
+    (function () {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const kin = document.getElementById("m5Kinetic");
+      if (kin && !reduced) {
+        const rows = kin.querySelectorAll(".m5-row");
+        let ticking = false;
+        function move() {
+          const r = kin.getBoundingClientRect();
+          const t = Math.min(1, Math.max(0, (window.innerHeight - r.top) / (window.innerHeight + r.height)));
+          const c = t - 0.5;
+          rows.forEach(function (row, i) {
+            const dir = i % 2 ? 1 : -1;
+            row.style.transform = "translateX(" + (c * dir * 16) + "vw)";
+          });
+          ticking = false;
+        }
+        window.addEventListener("scroll", function () {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(move);
+          }
+        }, { passive: true });
+        move();
+      }
+    })();
+  </script>
+</body>
+
+</html>
