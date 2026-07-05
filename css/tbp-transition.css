@@ -1,0 +1,58 @@
+/* ============================================================
+   THE BROWN PRINT — filmstrip page-wipe transition
+   Drop-in for the multi-page site. Pairs with tbp-transition.js
+   ============================================================ */
+
+.tbp-wipe{
+  position:fixed; inset:0; z-index:9999; pointer-events:none;
+  overflow:hidden; visibility:hidden;
+}
+.tbp-wipe.is-active{ visibility:visible; }
+
+.tbp-wipe-strip{ position:absolute; inset:0; }
+
+.tbp-panel{
+  position:absolute; top:0; bottom:0;
+  background:linear-gradient(180deg,#17130e,#0c0a09);
+  border-right:1px solid rgba(255,255,255,.045);
+  transform:translateY(-101%);          /* idle: hidden above */
+}
+
+@keyframes tbp-cover  { from{transform:translateY(-101%)} to{transform:translateY(0)} }
+@keyframes tbp-reveal { from{transform:translateY(0)}     to{transform:translateY(101%)} }
+
+.tbp-wipe.is-cover  .tbp-panel{ animation:tbp-cover  .6s cubic-bezier(.83,0,.17,1) both; }
+.tbp-wipe.is-arrive .tbp-panel{ transform:translateY(0); }          /* covered, static */
+.tbp-wipe.is-reveal .tbp-panel{ animation:tbp-reveal .6s cubic-bezier(.83,0,.17,1) both; }
+
+/* ---- chapter card shown on the shutter ---- */
+.tbp-wipe-content{
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  opacity:0; transition:opacity .35s ease;
+}
+.tbp-wipe.is-cover .tbp-wipe-content{ opacity:1; transition-delay:.27s; }
+
+.tbp-num{ font-family:'JetBrains Mono',monospace; font-size:.7rem;
+  letter-spacing:.3em; color:var(--tbp-acc,#f59e0b); margin-bottom:1.3rem; }
+.tbp-pre{ font-family:'Bebas Neue',sans-serif; letter-spacing:.5em;
+  font-size:.72rem; color:#78716c; margin-bottom:.7rem; }
+.tbp-title{ font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,11vw,8rem);
+  letter-spacing:.04em; line-height:.95; color:#fafaf9; text-transform:uppercase; }
+.tbp-line{ height:2px; margin-top:1.3rem; background:var(--tbp-acc,#f59e0b); width:0; }
+.tbp-wipe.is-cover .tbp-line{ width:150px; transition:width .6s cubic-bezier(.2,.7,.2,1) .3s; }
+
+/* ---- anti-flash: while a wipe-arrival is pending, hide the fresh page
+        behind a solid dark cover until JS takes over (no FOUC) ---- */
+html.tbp-arriving body{ visibility:hidden; }
+html.tbp-arriving::before{
+  content:""; position:fixed; inset:0; background:#0c0a09; z-index:99998;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .tbp-wipe.is-cover .tbp-panel,
+  .tbp-wipe.is-reveal .tbp-panel{ animation:none !important; }
+  .tbp-wipe{ display:none !important; }
+  html.tbp-arriving body{ visibility:visible !important; }
+  html.tbp-arriving::before{ display:none !important; }
+}

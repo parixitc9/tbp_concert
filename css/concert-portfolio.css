@@ -1,0 +1,1395 @@
+/* ============================================================
+   CONCERT PORTFOLIO — Dedicated stylesheet
+   Glassmorphism, CSS3D cards, scroll animations, tour map,
+   mobile/cross-browser/responsive — fully self-contained.
+   Loads AFTER style.css + enhancements.css on the page.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. CUSTOM PROPERTIES
+   ------------------------------------------------------------ */
+:root {
+  --cp-orange: #f97316;
+  --cp-orange-glow: rgba(249, 115, 22, 0.35);
+  --cp-crimson: #ef4444;
+  --cp-crimson-glow: rgba(239, 68, 68, 0.25);
+  --cp-ember: #ea580c;
+  --cp-void: #060606;
+  --cp-charcoal: #121214;
+  --cp-smoke: #78716c;
+  --cp-silver: #d6d3d1;
+  --cp-silver-bright: #fafaf9;
+  --cp-glass-bg: rgba(18, 18, 20, 0.42);
+  --cp-glass-border: rgba(255, 255, 255, 0.08);
+  --cp-glass-highlight: rgba(255, 255, 255, 0.12);
+}
+
+/* ------------------------------------------------------------
+   2. GLASSMORPHISM UTILITIES
+   ------------------------------------------------------------ */
+.cp-glass {
+  background: var(--cp-glass-bg);
+  border: 1px solid var(--cp-glass-border);
+  border-radius: 20px;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 var(--cp-glass-highlight);
+}
+
+.cp-glass-subtle {
+  background: rgba(18, 18, 20, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.cp-glass-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.8rem 1.8rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cp-glass-btn:hover {
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.25);
+}
+
+.cp-glass-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.cp-glass-btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* @supports fallback: raise opacity so text stays readable */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cp-glass {
+    background: rgba(18, 18, 20, 0.92);
+  }
+  .cp-glass-subtle {
+    background: rgba(18, 18, 20, 0.88);
+  }
+  .cp-glass-btn {
+    background: rgba(30, 28, 26, 0.95);
+  }
+}
+
+/* ------------------------------------------------------------
+   3. 3D CARD SYSTEM
+   ------------------------------------------------------------ */
+.cp-card-3d-wrap {
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.cp-card-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cp-card-3d.flipped {
+  transform: rotateY(180deg);
+}
+
+.cp-card-3d-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.cp-card-3d-front {
+  z-index: 2;
+}
+
+.cp-card-3d-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.75rem;
+}
+
+/* Pointer devices: tilt effect on hover */
+@media (hover: hover) {
+  .cp-card-3d-wrap:hover .cp-card-3d:not(.flipped) {
+    transform: rotateY(5deg) rotateX(-3deg) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Touch devices: no tilt, just tap-to-flip */
+@media (hover: none) {
+  .cp-card-3d-wrap:active .cp-card-3d:not(.flipped) {
+    transform: scale(0.98);
+  }
+}
+
+/* ------------------------------------------------------------
+   4. HERO OVERLAY LAYOUT
+   ------------------------------------------------------------ */
+.cp-hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.cp-hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cp-hero-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cp-hero-overlay {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 6rem 1.5rem 4rem;
+}
+
+.cp-hero-card {
+  max-width: 640px;
+  width: 100%;
+  text-align: center;
+  padding: 3rem 2.5rem;
+}
+
+.cp-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #f87171;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.1);
+}
+
+.cp-tag-dot {
+  width: 6px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ef4444;
+  animation: cpPulseDot 2s infinite;
+}
+
+@keyframes cpPulseDot {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 14px #ef4444; }
+}
+
+.cp-hero-title {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 3.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--cp-silver-bright);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+
+.cp-hero-title .accent {
+  color: var(--cp-orange);
+  font-style: normal;
+  text-shadow: 0 0 20px var(--cp-orange-glow);
+  animation: cpNeonFlicker 7s linear infinite;
+}
+
+@keyframes cpNeonFlicker {
+  0%, 88%, 91%, 95%, 100% { opacity: 1; }
+  89% { opacity: 0.6; }
+  93% { opacity: 0.8; }
+}
+
+.cp-hero-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(231, 229, 228, 0.85);
+  font-weight: 300;
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.5rem;
+}
+
+.cp-hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Fallback when Three.js fails or reduced motion */
+.cp-hero-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(to bottom, rgba(12, 10, 9, 0.8), rgba(127, 29, 29, 0.3), rgba(6, 6, 6, 0.95));
+  background-size: cover;
+  background-position: center;
+}
+
+/* ------------------------------------------------------------
+   5. STATS SECTION
+   ------------------------------------------------------------ */
+.cp-stats {
+  padding: 5rem 0;
+  border-top: 1px solid rgba(249, 115, 22, 0.1);
+  border-bottom: 1px solid rgba(249, 115, 22, 0.1);
+}
+
+.cp-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.cp-stat-card {
+  padding: 2rem 1rem;
+  text-align: center;
+  border-radius: 16px;
+  background: rgba(18, 18, 20, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+}
+
+@media (hover: hover) {
+  .cp-stat-card:hover {
+    transform: translateY(-4px) rotateX(2deg);
+    border-color: rgba(249, 115, 22, 0.25);
+  }
+}
+
+.cp-stat-num {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  color: var(--cp-orange);
+  text-shadow: 0 0 20px var(--cp-orange-glow);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.cp-stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cp-smoke);
+}
+
+/* ------------------------------------------------------------
+   6. PORTFOLIO GRID — CSS3D CARDS
+   ------------------------------------------------------------ */
+.cp-portfolio {
+  padding: 5rem 0;
+}
+
+.cp-section-head {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.cp-section-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--cp-orange);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.cp-kicker-bar {
+  width: 2.5rem;
+  height: 1px;
+  background: rgba(249, 115, 22, 0.4);
+}
+
+.cp-section-title {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 5.5vw, 3.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cp-silver-bright);
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+.cp-section-title .em {
+  color: var(--cp-orange);
+  text-shadow: 0 0 25px var(--cp-orange-glow);
+}
+
+.cp-section-lead {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--cp-silver);
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  grid-auto-rows: 340px;
+}
+
+.cp-grid .cp-card-3d-wrap:nth-child(1) {
+  grid-row: span 2;
+}
+
+.cp-grid .cp-card-3d-wrap:nth-child(4) {
+  grid-row: span 2;
+}
+
+/* Card front */
+.cp-card-front-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cp-card-3d-wrap:hover .cp-card-front-img {
+  transform: scale(1.06);
+}
+
+.cp-card-front-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom, transparent 30%, rgba(6, 6, 6, 0.9) 90%);
+  pointer-events: none;
+}
+
+.cp-card-front-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+
+.cp-card-front-caption h3 {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cp-silver-bright);
+  margin-bottom: 0.3rem;
+}
+
+.cp-card-front-caption .meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cp-orange);
+}
+
+.cp-card-front-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  z-index: 3;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--cp-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.45);
+}
+
+.cp-card-3d-wrap:hover .cp-card-front-play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Card back */
+.cp-card-back {
+  background: var(--cp-charcoal);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
+.cp-card-back-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--cp-orange);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.cp-card-back h3 {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cp-silver-bright);
+  margin-bottom: 0.75rem;
+}
+
+.cp-card-back p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--cp-silver);
+  margin-bottom: 1.25rem;
+}
+
+.cp-card-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  background: var(--cp-orange);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.cp-card-back-btn:hover {
+  background: var(--cp-ember);
+  transform: translateX(3px);
+}
+
+/* Touch: show play button always */
+@media (hover: none) {
+  .cp-card-front-play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .cp-card-front-caption {
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------
+   7. FEATURED FILM SECTION
+   ------------------------------------------------------------ */
+.cp-featured {
+  position: relative;
+  padding: 6rem 0;
+  overflow: hidden;
+}
+
+.cp-featured-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, var(--cp-void), rgba(127, 29, 29, 0.15), var(--cp-void));
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.cp-featured-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.cp-featured-video {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+}
+
+.cp-featured-video img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.cp-featured-video:hover img {
+  transform: scale(1.04);
+}
+
+.cp-featured-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.cp-featured-play-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--cp-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(249, 115, 22, 0.4);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cp-featured-video:hover .cp-featured-play-btn {
+  transform: scale(1.1);
+  box-shadow: 0 14px 50px rgba(249, 115, 22, 0.55);
+}
+
+.cp-featured-info {
+  padding: 2rem;
+}
+
+.cp-featured-info .cp-section-kicker {
+  justify-content: flex-start;
+}
+
+.cp-featured-info h3 {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cp-silver-bright);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.cp-featured-info p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--cp-silver);
+  margin-bottom: 2rem;
+}
+
+.cp-featured-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.cp-featured-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cp-featured-meta-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cp-smoke);
+}
+
+.cp-featured-meta-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--cp-silver);
+}
+
+/* ------------------------------------------------------------
+   8. TESTIMONIALS CAROUSEL
+   ------------------------------------------------------------ */
+.cp-testimonials {
+  padding: 5rem 0;
+  overflow: hidden;
+}
+
+.cp-carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem 0 2rem;
+  scrollbar-width: none;
+}
+
+.cp-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.cp-testimonial-card {
+  flex: 0 0 360px;
+  scroll-snap-align: start;
+  padding: 2rem;
+  border-radius: 16px;
+  background: rgba(18, 18, 20, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .cp-testimonial-card:hover {
+    transform: perspective(800px) rotateY(-3deg) translateY(-4px);
+  }
+}
+
+.cp-testimonial-stars {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  color: var(--cp-orange);
+}
+
+.cp-testimonial-quote {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--cp-silver);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.cp-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cp-testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(249, 115, 22, 0.15);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: var(--cp-orange);
+}
+
+.cp-testimonial-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--cp-silver-bright);
+}
+
+.cp-testimonial-event {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--cp-smoke);
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------
+   9. ABOUT SECTION
+   ------------------------------------------------------------ */
+.cp-about {
+  padding: 5rem 0;
+}
+
+.cp-about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.cp-about-img {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  aspect-ratio: 4 / 5;
+}
+
+.cp-about-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.cp-about-img:hover img {
+  transform: scale(1.04);
+}
+
+.cp-about-img-tag {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 2;
+  padding: 0.4rem 1rem;
+  background: rgba(249, 115, 22, 0.12);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--cp-orange);
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.cp-about-text h3 {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cp-silver-bright);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.cp-about-text h3 .em {
+  color: var(--cp-orange);
+}
+
+.cp-about-text p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--cp-silver);
+  margin-bottom: 1.5rem;
+}
+
+.cp-about-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.cp-about-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: rgba(249, 115, 22, 0.05);
+  border: 1px solid rgba(249, 115, 22, 0.12);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.cp-about-feature:hover {
+  background: rgba(249, 115, 22, 0.1);
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+.cp-about-feature svg {
+  flex-shrink: 0;
+  color: var(--cp-orange);
+}
+
+.cp-about-feature span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--cp-silver-bright);
+}
+
+/* ------------------------------------------------------------
+   10. TOUR MAP
+   ------------------------------------------------------------ */
+.cp-map-section {
+  padding: 5rem 0;
+  overflow: hidden;
+}
+
+.cp-map-container {
+  position: relative;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.cp-map-svg {
+  width: 100%;
+  height: auto;
+}
+
+.cp-map-dot {
+  fill: var(--cp-orange);
+  filter: drop-shadow(0 0 6px var(--cp-orange-glow));
+  cursor: pointer;
+  transition: r 0.3s ease;
+}
+
+.cp-map-dot:hover {
+  r: 6;
+}
+
+.cp-map-pulse {
+  fill: none;
+  stroke: var(--cp-orange);
+  stroke-width: 1;
+  opacity: 0;
+  animation: cpMapPulse 2.5s ease-out infinite;
+}
+
+@keyframes cpMapPulse {
+  0% { r: 3; opacity: 0.6; }
+  100% { r: 18; opacity: 0; }
+}
+
+.cp-map-tooltip {
+  position: absolute;
+  z-index: 20;
+  padding: 1rem 1.25rem;
+  background: rgba(18, 18, 20, 0.88);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.cp-map-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cp-map-tooltip h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--cp-silver-bright);
+  margin-bottom: 0.25rem;
+}
+
+.cp-map-tooltip p {
+  font-size: 0.75rem;
+  color: var(--cp-smoke);
+  letter-spacing: 0.08em;
+}
+
+/* ------------------------------------------------------------
+   11. CTA SECTION
+   ------------------------------------------------------------ */
+.cp-cta {
+  padding: 6rem 1.5rem;
+  text-align: center;
+  background: radial-gradient(circle at 50% 100%, rgba(249, 115, 22, 0.12), transparent 70%);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.cp-cta-icon {
+  color: var(--cp-orange);
+  display: inline-flex;
+  margin-bottom: 2rem;
+  animation: cpCtaPulse 3s infinite ease-in-out;
+}
+
+@keyframes cpCtaPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 18px var(--cp-orange-glow)); }
+}
+
+.cp-cta h2 {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cp-silver-bright);
+  margin-bottom: 1rem;
+}
+
+.cp-cta p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--cp-silver);
+  max-width: 36rem;
+  margin: 0 auto 2.5rem;
+}
+
+.cp-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, var(--cp-crimson), var(--cp-ember));
+  color: var(--cp-silver-bright);
+  padding: 1.1rem 2.2rem;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 40px rgba(239, 68, 68, 0.35);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cp-cta-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 50px rgba(239, 68, 68, 0.5);
+}
+
+.cp-cta-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.cp-cta-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ------------------------------------------------------------
+   12. SCROLL REVEAL (additive, works with enhance.js)
+   ------------------------------------------------------------ */
+.cp-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.cp-reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.cp-reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cp-reveal-stagger.in > * {
+  opacity: 1;
+  transform: none;
+}
+
+.cp-reveal-stagger.in > *:nth-child(1) { transition-delay: 0.04s; }
+.cp-reveal-stagger.in > *:nth-child(2) { transition-delay: 0.1s; }
+.cp-reveal-stagger.in > *:nth-child(3) { transition-delay: 0.16s; }
+.cp-reveal-stagger.in > *:nth-child(4) { transition-delay: 0.22s; }
+.cp-reveal-stagger.in > *:nth-child(5) { transition-delay: 0.28s; }
+.cp-reveal-stagger.in > *:nth-child(6) { transition-delay: 0.34s; }
+.cp-reveal-stagger.in > *:nth-child(n + 7) { transition-delay: 0.38s; }
+
+/* Image lazy fade */
+.cp-reveal-img {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.cp-reveal-img.loaded {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   13. RESPONSIVE BREAKPOINTS
+   ------------------------------------------------------------ */
+
+/* ---- Ultra-wide ---- */
+@media (min-width: 1536px) {
+  .cp-grid {
+    grid-auto-rows: 380px;
+  }
+  .cp-about-grid {
+    gap: 5rem;
+  }
+}
+
+/* ---- Desktop / large tablet landscape ---- */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .cp-grid {
+    gap: 1.25rem;
+  }
+}
+
+/* ---- Tablet portrait ---- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cp-stats-grid {
+    gap: 1.25rem;
+  }
+  .cp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 280px;
+  }
+  .cp-grid .cp-card-3d-wrap:nth-child(1),
+  .cp-grid .cp-card-3d-wrap:nth-child(4) {
+    grid-row: span 1;
+  }
+  .cp-featured-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .cp-about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .cp-about-img {
+    aspect-ratio: 16 / 9;
+  }
+  .cp-hero-overlay {
+    padding: 8rem 1.5rem 4rem;
+  }
+}
+
+/* ---- Phone ---- */
+@media (max-width: 767px) {
+  .cp-hero-overlay {
+    padding: 7rem 1.15rem 3rem;
+  }
+  .cp-hero-card {
+    padding: 2rem 1.5rem;
+  }
+  .cp-hero-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+  .cp-hero-desc {
+    font-size: 0.95rem;
+  }
+  .cp-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cp-glass-btn {
+    justify-content: center;
+  }
+
+  .cp-stats {
+    padding: 3.5rem 0;
+  }
+  .cp-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .cp-stat-card {
+    padding: 1.25rem 0.75rem;
+  }
+  .cp-stat-num {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .cp-portfolio {
+    padding: 3.5rem 0;
+  }
+  .cp-section-head {
+    margin-bottom: 2.25rem;
+  }
+  .cp-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 260px;
+    gap: 1rem;
+  }
+  .cp-grid .cp-card-3d-wrap:nth-child(1),
+  .cp-grid .cp-card-3d-wrap:nth-child(4) {
+    grid-row: span 1;
+  }
+
+  .cp-featured {
+    padding: 3.5rem 0;
+  }
+  .cp-featured-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .cp-featured-video {
+    border-radius: 12px;
+  }
+  .cp-featured-info {
+    padding: 1.25rem 0;
+  }
+
+  .cp-testimonials {
+    padding: 3.5rem 0;
+  }
+  .cp-testimonial-card {
+    flex: 0 0 85vw;
+    padding: 1.5rem;
+  }
+
+  .cp-about {
+    padding: 3.5rem 0;
+  }
+  .cp-about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .cp-about-img {
+    aspect-ratio: 16 / 10;
+  }
+  .cp-about-features {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-map-section {
+    padding: 3.5rem 0;
+  }
+
+  .cp-cta {
+    padding: 4rem 1.15rem;
+  }
+  .cp-cta h2 {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+  .cp-cta p {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ---- Very small phones ---- */
+@media (max-width: 400px) {
+  .cp-hero-card {
+    padding: 1.5rem 1.15rem;
+  }
+  .cp-hero-title {
+    font-size: clamp(1.8rem, 10vw, 2.4rem);
+  }
+  .cp-stats-grid {
+    gap: 0.75rem;
+  }
+  .cp-stat-card {
+    padding: 1rem 0.5rem;
+  }
+  .cp-grid {
+    grid-auto-rows: 220px;
+  }
+  .cp-testimonial-card {
+    flex: 0 0 90vw;
+  }
+  .cp-about-features {
+    gap: 0.75rem;
+  }
+}
+
+/* ---- Landscape phones ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .cp-hero {
+    min-height: 620px;
+  }
+  .cp-hero-overlay {
+    padding-top: 5rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   14. TOUCH ERGONOMICS
+   ------------------------------------------------------------ */
+@media (hover: none) {
+  .cp-card-front-play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .cp-card-front-caption {
+    transform: translateY(0);
+  }
+  .cp-glass-btn:active,
+  .cp-cta-btn:active,
+  .cp-card-back-btn:active {
+    transform: scale(0.97);
+  }
+  .cp-stat-card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ------------------------------------------------------------
+   15. CROSS-BROWSER PLUMBING
+   ------------------------------------------------------------ */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cp-carousel,
+.cp-testimonials {
+  -webkit-overflow-scrolling: touch;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* aspect-ratio fallback for video frames */
+@supports not (aspect-ratio: 16 / 9) {
+  .cp-featured-video {
+    height: 0;
+    padding-bottom: 56.25%;
+  }
+  .cp-featured-video img,
+  .cp-featured-play {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+/* ---- Accessible focus (keyboard only) ---- */
+a:focus-visible,
+button:focus-visible,
+.cp-card-3d-wrap:focus-visible {
+  outline: 2px solid var(--cp-orange);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---- will-change for animated elements ---- */
+.cp-reveal,
+.cp-reveal-stagger > *,
+.cp-card-3d,
+.cp-hero-canvas canvas {
+  will-change: opacity, transform;
+}
+
+/* ------------------------------------------------------------
+   16. REDUCED MOTION
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cp-reveal,
+  .cp-reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .cp-reveal-img {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .cp-card-3d {
+    transition: none !important;
+  }
+  .cp-card-3d.flipped {
+    transform: rotateY(180deg) !important;
+  }
+  .cp-hero-canvas canvas {
+    display: none !important;
+  }
+  .cp-tag-dot,
+  .cp-hero-title .accent,
+  .cp-cta-icon,
+  .cp-map-pulse {
+    animation: none !important;
+  }
+  .cp-featured-bg {
+    background-attachment: scroll;
+  }
+  .cp-stat-card:hover,
+  .cp-card-3d-wrap:hover .cp-card-3d,
+  .cp-card-3d-wrap:hover .cp-card-front-img,
+  .cp-card-3d-wrap:hover .cp-card-front-play,
+  .cp-about-img:hover img,
+  .cp-featured-video:hover img,
+  .cp-featured-video:hover .cp-featured-play-btn,
+  .cp-glass-btn:hover,
+  .cp-cta-btn:hover,
+  .cp-card-back-btn:hover,
+  .cp-testimonial-card:hover,
+  .cp-about-feature:hover {
+    transform: none !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   17. PRINT
+   ------------------------------------------------------------ */
+@media print {
+  .cp-hero-canvas,
+  .cp-hero-fallback,
+  .cp-map-section,
+  .cp-cta,
+  .cp-testimonials,
+  .grain {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .cp-glass,
+  .cp-glass-subtle,
+  .cp-stat-card,
+  .cp-card-3d-back,
+  .cp-testimonial-card {
+    background: #f5f5f5 !important;
+    border: 1px solid #ccc !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}

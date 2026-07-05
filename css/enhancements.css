@@ -1,0 +1,438 @@
+/* ============================================================
+   THE BROWN PRINT — enhancements layer
+   Additive only. Loads AFTER style.css on every page.
+   Goals:
+     1. Full responsiveness (small phone → ultra-wide)
+     2. Cross-browser robustness (Safari/iOS, Firefox, older Chromium)
+     3. Immersive UX (scroll reveals, image fade-in, smoother motion)
+   Nothing here overwrites a theme colour; it only fills gaps.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   0. CROSS-BROWSER PLUMBING
+   ------------------------------------------------------------ */
+
+/* Vendor-prefix backdrop-filter (Safari needs -webkit-, and some
+   older engines drop the rule entirely if the prefix is missing). */
+.nav.solid,
+.nav-mobile,
+.modal-overlay,
+.vp-overlay,
+.story-body,
+.mouse-icon {
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.modal-overlay {
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.vp-overlay {
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.story-body {
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Firefox / engines without backdrop-filter: give translucent
+   surfaces a solid-enough background so text stays readable. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body[data-theme="home"] .nav.solid,
+  body[data-theme="music"] .nav.solid,
+  body[data-theme="concerts"] .nav.solid,
+  body[data-theme="brands"] .nav.solid {
+    background: rgba(12, 10, 9, 0.97);
+  }
+  body[data-theme="wedding"] .nav.solid {
+    background: rgba(255, 241, 242, 0.98);
+  }
+  body[data-theme="social"] .nav.solid {
+    background: rgba(240, 253, 250, 0.98);
+  }
+  .modal-overlay {
+    background: rgba(12, 10, 9, 0.94);
+  }
+  .vp-overlay {
+    background: rgba(12, 10, 9, 0.97);
+  }
+  .story-body {
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Use dynamic viewport height where supported so the hero doesn't
+   jump when mobile browser chrome shows/hides. Falls back to vh. */
+.hero {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.sticky-viewport {
+  height: 100vh;
+  height: 100svh;
+}
+
+/* Prevent iOS text auto-inflation and give smooth momentum scroll. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scrollable panels: momentum scrolling on iOS. */
+.modal,
+.vp-overlay {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Keep aspect-ratio players correct on Safari <15 (no aspect-ratio).
+   Padding-box fallback only kicks in when aspect-ratio is unsupported. */
+@supports not (aspect-ratio: 16 / 9) {
+  .vp-frame {
+    height: 0;
+    padding-bottom: 56.25%;
+  }
+  .vp-frame > .vp-video,
+  .vp-frame > .vp-bigplay,
+  .vp-frame > .vp-controls {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+/* Consistent form control appearance across engines. */
+.field,
+.chip-sm,
+.service-row,
+.chip {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Firefox strips inner button padding differently; normalise focus. */
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* ------------------------------------------------------------
+   1. ACCESSIBLE FOCUS (keyboard users only, doesn't affect mouse)
+   ------------------------------------------------------------ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.work-card:focus-visible,
+.cat-card:focus-visible,
+.story:focus-visible {
+  outline: 2px solid var(--amber-400);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+body[data-theme="wedding"] a:focus-visible,
+body[data-theme="wedding"] button:focus-visible,
+body[data-theme="social"] a:focus-visible,
+body[data-theme="social"] button:focus-visible {
+  outline-color: var(--amber-700);
+}
+
+body[data-theme="music"] a:focus-visible,
+body[data-theme="music"] button:focus-visible {
+  outline-color: var(--violet-400);
+}
+
+body[data-theme="brands"] a:focus-visible,
+body[data-theme="brands"] button:focus-visible {
+  outline-color: var(--gold-400);
+}
+
+/* ------------------------------------------------------------
+   2. TOUCH ERGONOMICS
+   Bigger, comfortable hit targets on touch devices; disable the
+   sticky :hover state that leaves cards "stuck" after a tap.
+   ------------------------------------------------------------ */
+@media (hover: none) {
+  .work-card .work-card-caption {
+    transform: translateY(0);
+  }
+  .work-card .work-card-play .play-btn {
+    opacity: 1;
+  }
+  .cat-card .explore {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  /* neutralise scale-on-hover so taps don't leave zoomed cards */
+  .btn:active,
+  .nav-cta:active {
+    transform: scale(0.98);
+  }
+}
+
+.nav-burger {
+  padding: 0.5rem;
+  margin: -0.5rem;
+}
+
+/* ------------------------------------------------------------
+   3. IMMERSIVE MOTION
+   Scroll-reveal, image fade-in, gentle nav entrance.
+   All gated behind prefers-reduced-motion at the bottom.
+   ------------------------------------------------------------ */
+
+/* Elements JS marks with .reveal rise + fade as they enter view. */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger children of a revealed group for a filmstrip cascade. */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-stagger.in > * {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-stagger.in > *:nth-child(1) { transition-delay: 0.02s; }
+.reveal-stagger.in > *:nth-child(2) { transition-delay: 0.08s; }
+.reveal-stagger.in > *:nth-child(3) { transition-delay: 0.14s; }
+.reveal-stagger.in > *:nth-child(4) { transition-delay: 0.20s; }
+.reveal-stagger.in > *:nth-child(5) { transition-delay: 0.26s; }
+.reveal-stagger.in > *:nth-child(6) { transition-delay: 0.32s; }
+.reveal-stagger.in > *:nth-child(7) { transition-delay: 0.38s; }
+.reveal-stagger.in > *:nth-child(8) { transition-delay: 0.44s; }
+.reveal-stagger.in > *:nth-child(n + 9) { transition-delay: 0.48s; }
+
+/* Lazy images fade in once loaded (removes the hard pop-in). */
+.work-card img,
+.story-img img {
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.5s ease;
+}
+
+.work-card img.loaded,
+.story-img img.loaded,
+.work-card img[data-nofade],
+.story-img img[data-nofade] {
+  opacity: 1;
+}
+
+/* Slightly richer card lift on pointer devices (kept subtle). */
+@media (hover: hover) {
+  .work-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s ease, border-color 0.3s ease;
+  }
+  .work-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  }
+  .cat-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  }
+  .cat-card:hover {
+    transform: translateY(-5px);
+  }
+}
+
+/* Nav slides down on first paint for a polished entrance. */
+.nav {
+  will-change: transform;
+}
+
+.tbp-nav-intro {
+  animation: tbp-nav-drop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes tbp-nav-drop {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+/* ------------------------------------------------------------
+   4. RESPONSIVE — refined breakpoints
+   The base sheet only has one 768px split. Fill in the rest.
+   ------------------------------------------------------------ */
+
+/* ---- Ultra-wide: let the canvas breathe, cap line length ---- */
+@media (min-width: 1536px) {
+  .wrap { max-width: 88rem; }
+  .work-grid { grid-auto-rows: 260px; }
+}
+
+/* ---- Desktop / large tablet landscape ---- */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .cats-grid { gap: 1.25rem; }
+}
+
+/* ---- Tablet portrait (768–1023): 2-up grids, tighter hero ---- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 210px;
+  }
+  .cats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .page-hero {
+    padding: 8.5rem 1.5rem 4rem;
+  }
+  section.con-hero,
+  .page-hero.mus-hero,
+  .page-hero.soc-hero,
+  .page-hero.brd-hero {
+    padding-top: 8.5rem;
+  }
+}
+
+/* ---- Phones & small tablets (≤767): base sheet hides nav-links.
+        Add layout refinements the base sheet misses. ---- */
+@media (max-width: 767px) {
+  .wrap,
+  .wrap-narrow {
+    padding: 0 1.15rem;
+  }
+
+  /* keep the mobile menu button inside the dark nav on light pages
+     readable — base sheet only colours burger for wedding/social */
+  .nav-burger { color: currentColor; }
+
+  /* Category cards: shorter so the page isn't a mile long */
+  .cat-card { height: 20rem; }
+  .cat-card-inner { padding: 1.5rem; }
+  .cat-card h3 { font-size: 1.6rem; }
+
+  /* Work grid stays 2-up but with shorter rows on phones */
+  .work-grid {
+    gap: 0.75rem;
+    grid-auto-rows: 150px;
+  }
+  .work-card-caption { padding: 0.75rem; }
+  .work-card-caption h3 { font-size: 1rem; }
+
+  /* Hero copy breathing room */
+  .hero-content { padding: 0 1.15rem; }
+  .hero p { font-size: 1.02rem; }
+  .hero-actions { gap: 0.75rem; }
+  .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
+
+  /* Category-page heroes: trim the 10rem desktop padding on phones.
+     section.con-hero out-specifies the page-local .con-hero rule. */
+  .page-hero,
+  section.con-hero { padding: 7.5rem 1.25rem 3.5rem; }
+
+  /* Section rhythm: trim the generous desktop padding */
+  .cats { padding: 4rem 0; }
+  .stats { padding: 3rem 0; }
+  .work-section { padding: 3rem 0; }
+  .stories { padding: 3.5rem 0; }
+  .sec-head { margin-bottom: 2.25rem; }
+
+  /* Stats: 2×2 with comfortable gap (base is 2-col already) */
+  .stats-grid { gap: 1.75rem 1rem; }
+
+  /* Modal + video player: use the full small screen sensibly */
+  .modal-overlay { padding: 0.75rem; }
+  .modal-pad { padding: 1.5rem; }
+  .modal h3 { font-size: 1.3rem; }
+  .modal-actions { flex-wrap: wrap; }
+  .vp-overlay { padding: 0.75rem; }
+  .vp-close { top: -2.25rem; }
+  .vp-caption h3 { font-size: 1.2rem; }
+
+  /* Footer: comfortable single column */
+  .footer { padding: 3rem 0 2rem; }
+  .footer-grid { gap: 2rem; }
+  .footer-bottom { text-align: center; }
+  .footer-bottom .btn { width: 100%; justify-content: center; }
+
+  /* Marquees: smaller type so they don't overwhelm small screens */
+  .marquee-track,
+  .brd-strip-track { font-size: 2rem; }
+  .soc-confetti-track { font-size: 1.75rem; }
+}
+
+/* ---- Very small phones (≤400) ---- */
+@media (max-width: 400px) {
+  .hero h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
+  .work-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+  .work-card.tall { grid-row: span 1; }
+  .chip-grid { grid-template-columns: 1fr; }
+  .nav { padding: 1rem 0; }
+  .nav-logo { font-size: 1.25rem; }
+}
+
+/* ---- Landscape phones: shrink tall full-height blocks ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: 620px; }
+  .scroll-hint { display: none; }
+}
+
+/* ------------------------------------------------------------
+   5. WEDDING scroll-film — mobile & no-JS safety
+   Phones skip the heavy frame film (see wedding.html) and get a
+   one-viewport static hero; keep the overlay text legible.
+   ------------------------------------------------------------ */
+@media (max-width: 767px) {
+  .intro-container { height: 100vh; height: 100svh; }
+  .hero-overlay-content h1 { font-size: 2.1rem; }
+  .hero-overlay-content p { font-size: 1rem; }
+  .poetic-text { font-size: 1.5rem; }
+}
+
+/* ------------------------------------------------------------
+   6. REDUCED MOTION — turn every enhancement animation off
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .work-card img,
+  .story-img img {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .tbp-nav-intro { animation: none !important; }
+  .work-card:hover,
+  .cat-card:hover { transform: none !important; }
+  html { scroll-behavior: auto !important; }
+}
+
+/* ------------------------------------------------------------
+   7. PRINT — legible fallback
+   ------------------------------------------------------------ */
+@media print {
+  .nav, .grain, .scroll-hint, .marquee, .soc-confetti,
+  .brd-strip, .vp-overlay, .modal-overlay { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+}
