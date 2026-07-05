@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add(("startViewTransition" in document) ? "vt-native" : "vt-fallback");</script>
+  <script>
+    /* Force the intro scroll-film to replay every time this page is opened,
+       even after visiting other pages and returning. Browsers otherwise
+       restore the previous scroll position, which skips the animation. */
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.addEventListener("pageshow", function () { window.scrollTo(0, 0); });
+  </script>
+  <title>Weddings — The Brown Print</title>
+  <meta name="description"
+    content="Cinematic Punjabi wedding films and photography by The Brown Print — from the Anand Karaj to the last dance, told with warmth and colour." />
+  <meta name="theme-color" content="#fff1f2" />
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230c0a09'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%23f59e0b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/enhancements.css" />
+  <link rel="stylesheet" href="css/tbp-transition.css" />
+  <script
+    id="tbp-arriving-init">try { if (sessionStorage.getItem("tbp-wipe")) document.documentElement.classList.add("tbp-arriving"); } catch (e) { }</script>
+  <style>
+    /* page-local: wedding light theme overrides */
+    body.wedding-page {
+      background: var(--rose-50);
+      color: var(--stone-700);
+    }
+
+    .wed-hero {
+      background: linear-gradient(to bottom, var(--rose-50), var(--amber-50), var(--rose-50));
+    }
+
+    .wed-hero .glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(244, 194, 194, 0.4), transparent 60%);
+    }
+
+    .wed-hero h1 {
+      color: var(--stone-800);
+    }
+
+    .wed-hero p {
+      color: var(--stone-600);
+    }
+
+    .wed-photos {
+      background: linear-gradient(to bottom, var(--rose-50), var(--amber-50));
+    }
+
+    .wed-films {
+      background: var(--amber-50);
+    }
+
+    .wed-stories {
+      background: linear-gradient(to bottom, var(--amber-50), var(--rose-100));
+    }
+
+    .wed-cta {
+      background: var(--rose-100);
+    }
+
+    .wed-section-label {
+      color: var(--amber-700);
+    }
+
+    .wed-section h2 {
+      color: var(--stone-800);
+    }
+
+    .wed-cta h2 {
+      color: var(--stone-800);
+    }
+
+    .wed-cta p {
+      color: var(--stone-600);
+    }
+
+    .stories-head h2 {
+      color: var(--stone-800);
+    }
+
+    .stories-head p {
+      color: var(--stone-600);
+      max-width: 42rem;
+      margin: 0.75rem auto 0;
+    }
+
+    /* wedding work cards use a soft play button */
+    body.wedding-page .play-btn {
+      background: var(--rose-100);
+      color: var(--rose-700);
+    }
+
+    /* ==============================================
+       SCROLL ANIMATION STYLING INTEGRATION
+       ============================================== */
+
+    /* Intro scroll-trigger block */
+    .intro-container {
+      height: 300vh;
+      /* Scroll height for animation play + fade */
+      position: relative;
+      background-color: var(--stone-950);
+      margin-top: 0;
+    }
+
+    /* Sticky wrapper to hold canvas in viewport */
+    .sticky-viewport {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--stone-950);
+    }
+
+    #scroll-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    /* Main Content Wrapper sits below the scroll animation container */
+    .main-content {
+      position: relative;
+      z-index: 5;
+      background: var(--rose-50);
+    }
+
+    /* Page Navigation overrides to handle dark -> light scroll transitions */
+    .nav {
+      background: transparent !important;
+      border-bottom: none !important;
+      backdrop-filter: none !important;
+      color: #fff !important;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav .nav-logo {
+      color: #fff !important;
+    }
+
+    .nav .nav-link {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .nav .nav-link.active {
+      color: var(--amber-400) !important;
+    }
+
+    .nav .nav-cta {
+      background: var(--amber-500) !important;
+      color: var(--stone-950) !important;
+    }
+
+    /* Nav class applied when scrolling past intro into light section */
+    .nav.scrolled-light {
+      background: rgba(255, 241, 242, 0.9) !important;
+      border-bottom: 1px solid rgba(254, 205, 211, 0.4) !important;
+      backdrop-filter: blur(12px) !important;
+      color: var(--stone-700) !important;
+    }
+
+    .nav.scrolled-light .nav-logo {
+      color: var(--stone-800) !important;
+    }
+
+    .nav.scrolled-light .nav-link {
+      color: var(--stone-500) !important;
+    }
+
+    .nav.scrolled-light .nav-link.active {
+      color: var(--amber-700) !important;
+    }
+
+    .nav.scrolled-light .nav-cta {
+      background: var(--stone-800) !important;
+      color: var(--rose-50) !important;
+    }
+
+    /* Hero Text Overlay on Canvas */
+    .hero-overlay-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 5;
+      width: 90%;
+      max-width: 640px;
+      opacity: 1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .hero-overlay-content h1 {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--stone-50);
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+    }
+
+    .hero-overlay-content p {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--stone-300);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+    }
+
+    /* Interactive loader overlay */
+    .loader-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-color: var(--stone-950);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .loader-content {
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+    }
+
+    .loader-logo {
+      font-size: 2.25rem;
+      color: var(--gold-400);
+      margin-bottom: 0.25rem;
+      text-shadow: 0 0 30px rgba(212, 178, 95, 0.2);
+    }
+
+    .loader-kicker {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--stone-500);
+      margin-bottom: 3rem;
+      display: block;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 2px;
+      background-color: var(--stone-800);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background-color: var(--gold-400);
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 10px var(--gold-400);
+    }
+
+    .loader-percentage {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--stone-300);
+    }
+
+    /* Scroll mouse prompt */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--stone-400);
+      opacity: 1;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .scroll-indicator.hidden {
+      opacity: 0;
+      transform: translate(-50%, 10px);
+    }
+
+    .scroll-indicator-text {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .mouse-icon {
+      width: 24px;
+      height: 40px;
+      border: 2px solid var(--stone-400);
+      border-radius: 12px;
+      position: relative;
+      background: rgba(12, 10, 9, 0.4);
+      backdrop-filter: blur(4px);
+    }
+
+    .mouse-wheel {
+      width: 4px;
+      height: 8px;
+      background-color: var(--gold-400);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollPulse 1.8s infinite;
+      box-shadow: 0 0 6px var(--gold-400);
+    }
+
+    @keyframes scrollPulse {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      60% {
+        opacity: 0.1;
+        transform: translate(-50%, 14px);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    /* Poetic floating text styles */
+    .editorial-overlays {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 4;
+    }
+
+    .poetic-text {
+      position: absolute;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.25rem;
+      font-style: italic;
+      color: var(--stone-50);
+      width: 85%;
+      max-width: 680px;
+      line-height: 1.5;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .poetic-text span.gold {
+      color: var(--gold-400);
+      text-shadow: 0 0 25px rgba(212, 178, 95, 0.15);
+    }
+
+    .poetic-text.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .hero-overlay-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .poetic-text {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="wedding" class="wedding-page">
+  <div class="grain"></div>
+
+  <!-- Without JS the film can't run: hide the loader so content stays reachable -->
+  <noscript>
+    <style>
+      .loader-overlay { display: none !important; }
+      .intro-container { height: 100vh; }
+    </style>
+  </noscript>
+
+  <!-- Preloader overlay screen -->
+  <div class="loader-overlay" id="loader">
+    <div class="loader-content">
+      <div class="loader-logo bebas">THE BROWN PRINT</div>
+      <span class="loader-kicker">Weddings</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div class="loader-percentage" id="loader-percent">0%</div>
+    </div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo bebas">THE BROWN PRINT</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="wedding.html" class="nav-link active">Weddings</a>
+        <a href="music.html" class="nav-link">Music</a>
+        <a href="concerts.html" class="nav-link">Concerts</a>
+        <a href="social.html" class="nav-link">Social</a>
+        <a href="brands.html" class="nav-link">Brands</a>
+        <button class="nav-cta" onclick="openProject('wedding')">Start a Project</button>
+      </div>
+      <button class="nav-burger" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+      </button>
+    </div>
+    <div class="nav-mobile">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="wedding.html" class="nav-link active">Weddings</a>
+      <a href="music.html" class="nav-link">Music</a>
+      <a href="concerts.html" class="nav-link">Concerts</a>
+      <a href="social.html" class="nav-link">Social</a>
+      <a href="brands.html" class="nav-link">Brands</a>
+      <button class="nav-cta" onclick="openProject('wedding')">Start a Project</button>
+    </div>
+  </nav>
+
+  <!-- ============ SCROLL INTRO & BACKGROUND CANVAS ============ -->
+  <div class="intro-container" id="intro-container">
+    <div class="sticky-viewport">
+      <!-- Scroll Canvas -->
+      <canvas id="scroll-canvas"></canvas>
+
+      <!-- Editorial Floating Poetic Text -->
+      <div class="editorial-overlays">
+        <div class="poetic-text" id="text-1">A story of warmth, colour, and <span class="gold">quiet emotion</span>.
+        </div>
+        <div class="poetic-text" id="text-2">From the sacred rituals to the <span class="gold">last dance</span>.</div>
+        <div class="poetic-text" id="text-3">Moments preserved to live <span class="gold">forever</span>.</div>
+      </div>
+
+      <!-- Hero Overlay Content (fades first) -->
+      <div class="hero-overlay-content" id="hero-overlay">
+        <div class="divider-row" style="margin-bottom: 1rem;">
+          <div class="divider-line" style="background:rgba(255,255,255,0.25);"></div>
+          <span class="kicker wed-section-label" style="color: var(--gold-400);">Weddings</span>
+          <div class="divider-line" style="background:rgba(255,255,255,0.25);"></div>
+        </div>
+        <h1 class="serif">Where forever begins</h1>
+        <p>Punjabi weddings told with warmth, colour, and quiet emotion — from the Anand Karaj to the last dance.</p>
+      </div>
+
+      <!-- Scroll Mouse Prompt -->
+      <div class="scroll-indicator" id="scroll-prompt">
+        <div class="mouse-icon">
+          <div class="mouse-wheel"></div>
+        </div>
+        <div class="scroll-indicator-text">Scroll to play film</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MAIN CONTENT CONTAINER ============ -->
+  <div class="main-content" id="main-content">
+
+    <!-- ============ PHOTOGRAPHY (MOMENTS, FRAMED) ============ -->
+    <section class="work-section wed-section wed-photos" id="moments-framed-section">
+      <div class="wrap">
+        <div style="margin-bottom:2rem;">
+          <span class="work-label wed-section-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
+            Photography
+          </span>
+          <h2 class="serif">Moments, framed</h2>
+        </div>
+        <div class="work-grid" id="weddingPhotos"></div>
+      </div>
+    </section>
+
+    <!-- ============ FILMS ============ -->
+    <section class="work-section wed-section wed-films">
+      <div class="wrap">
+        <div style="margin-bottom:2rem;">
+          <span class="work-label wed-section-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="2" />
+              <path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5" />
+            </svg>
+            Films
+          </span>
+          <h2 class="serif">Stories in motion</h2>
+        </div>
+        <div class="work-grid" id="weddingVideos"></div>
+      </div>
+    </section>
+
+    <!-- ============ WEDDING STORIES ============ -->
+    <section class="stories wed-stories">
+      <div class="wrap-narrow">
+        <div class="sec-head stories-head">
+          <span class="kicker wed-section-label">Real Weddings</span>
+          <h2 class="serif">The stories behind the frames</h2>
+          <p>Every couple has a story. Here are a few of our favourites — read them, get inspired, imagine your own.</p>
+        </div>
+        <div id="storyList"></div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta wed-cta">
+      <span style="display:inline-flex;color:var(--rose-400);margin-bottom:1.25rem;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z" />
+        </svg>
+      </span>
+      <h2 class="serif">Planning your day?</h2>
+      <p>Tell us your vision and we'll craft a film and gallery you'll treasure for generations.</p>
+      <button class="btn btn-dark" onclick="openProject('wedding')">
+        Start Your Wedding Project <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>
+            <span class="footer-logo bebas">THE BROWN PRINT</span>
+            <p>A Punjabi-rooted studio in Canada crafting cinematic weddings, music albums, and concert films.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="wedding.html">Weddings</a>
+            <a href="music.html">Music Albums</a>
+            <a href="concerts.html">Concerts</a>
+            <a href="social.html">Social Events</a>
+            <a href="brands.html">Brands</a>
+          </div>
+          <div class="footer-col">
+            <h4>Get in touch</h4>
+            <a href="mailto:hello@thebrownprint.ca"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-10 5L2 7" />
+              </svg> hello@thebrownprint.ca</a>
+            <a href="tel:+14165550199"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+              </svg> +1 (416) 555-0199</a>
+            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg> Toronto, Canada</span>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <button class="btn btn-amber" onclick="openProject()">Start a Project <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></button>
+          <p class="copy">© 2026 The Brown Print · Crafted with intention</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/content.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/enhance.js"></script>
+  <script src="js/tbp-transition.js"></script>
+
+  <!-- Canvas Scroll Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("scroll-canvas");
+      const context = canvas.getContext("2d");
+
+      const loaderOverlay = document.getElementById("loader");
+      const progressFill = document.getElementById("progress-fill");
+      const loaderPercent = document.getElementById("loader-percent");
+
+      const introContainer = document.getElementById("intro-container");
+      const heroOverlay = document.getElementById("hero-overlay");
+      const scrollPrompt = document.getElementById("scroll-prompt");
+      const nav = document.querySelector(".nav");
+
+      // Select subtitle blocks and set their active range relative to zoom progress
+      const subtitles = [
+        { el: document.getElementById("text-1"), min: 0.22, max: 0.44 },
+        { el: document.getElementById("text-2"), min: 0.50, max: 0.72 },
+        { el: document.getElementById("text-3"), min: 0.78, max: 0.94 }
+      ];
+
+      // Light mode: phones, Save-Data connections, and reduced-motion users
+      // skip the heavy 70-frame film and get an instant static hero instead.
+      const LIGHT_MODE =
+        window.matchMedia("(max-width: 767px)").matches ||
+        (navigator.connection && navigator.connection.saveData) ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Frame source config — points at the frame sequence in your repo.
+      // If your frames live elsewhere, change FRAME_DIR / frameCount only.
+      const FRAME_DIR = "ezgif-112f62a00cb0e067-jpg";
+      const frameCount = 70;
+      const framesToLoad = LIGHT_MODE ? 1 : frameCount;
+      const images = [];
+      let loadedCount = 0;
+
+      // Construct file paths dynamically (ezgif-frame-001.png -> ezgif-frame-070.png)
+      const getFramePath = (index) => {
+        const paddedIndex = String(index).padStart(3, '0');
+        return `${FRAME_DIR}/ezgif-frame-${paddedIndex}.png`;
+      };
+
+      // Preloading process
+      let animationKicked = false;
+      function kickoff() {
+        if (animationKicked) return;
+        animationKicked = true;
+        initCanvasAnimation();
+      }
+
+      function preloadImages() {
+        for (let i = 1; i <= framesToLoad; i++) {
+          const img = new Image();
+          img.onload = () => {
+            loadedCount++;
+            const pct = Math.round((loadedCount / framesToLoad) * 100);
+            progressFill.style.width = `${pct}%`;
+            loaderPercent.textContent = `${pct}%`;
+
+            if (loadedCount === framesToLoad) {
+              setTimeout(kickoff, 300); // Small buffer for clean fade
+            }
+          };
+          img.onerror = () => {
+            console.error("Failed to load frame path: " + img.src);
+            loadedCount++;
+            if (loadedCount === framesToLoad) {
+              setTimeout(kickoff, 300);
+            }
+          };
+          img.src = getFramePath(i);
+          images.push(img);
+        }
+
+        // Safety net: never leave visitors stuck behind the loader, even if
+        // every frame fails (deleted folder, offline, blocked requests).
+        setTimeout(kickoff, 8000);
+      }
+
+      let targetFrame = 0;
+      let currentFrame = 0;
+      let animationStarted = false;
+
+      function initCanvasAnimation() {
+        // Ensure the film always starts from the very top / first frame.
+        window.scrollTo(0, 0);
+        targetFrame = 0;
+        currentFrame = 0;
+
+        // Fade out preloader
+        loaderOverlay.style.opacity = "0";
+        setTimeout(() => {
+          loaderOverlay.style.display = "none";
+        }, 800);
+
+        animationStarted = true;
+
+        if (LIGHT_MODE) {
+          // Static hero: one viewport tall, first frame as the backdrop.
+          introContainer.style.height = "100vh";
+          introContainer.style.height = "100svh";
+          const overlays = document.querySelector(".editorial-overlays");
+          if (overlays) overlays.style.display = "none";
+          const promptText = document.querySelector(".scroll-indicator-text");
+          if (promptText) promptText.textContent = "Scroll to explore";
+        }
+
+        // Handle canvas sizing and draw initial frame
+        resizeCanvas();
+
+        // Start scroll render loops (not needed for the static hero)
+        if (!LIGHT_MODE) requestAnimationFrame(animateLoop);
+      }
+
+      // Scrolling Phase & Opacity Controller
+      window.addEventListener("scroll", () => {
+        if (!animationStarted) return;
+
+        const scrollTop = window.scrollY;
+        const vh = window.innerHeight;
+
+        // Easing thresholds derived from the intro's real height, so the
+        // pacing adapts to any container size (full film or static hero).
+        const introEndScroll = introContainer.offsetHeight; // fully scrolled away
+        const animEndScroll = introEndScroll * 0.73;        // film scrub range
+
+        // Fade scroll prompt as soon as user scrolls down slightly
+        if (scrollTop > 50) {
+          scrollPrompt.classList.add("hidden");
+        } else {
+          scrollPrompt.classList.remove("hidden");
+        }
+
+        // 1. Navigation Bar transitions from dark (white links) to light page navbar
+        if (scrollTop > Math.max(introEndScroll - 120, vh * 0.5)) {
+          nav.classList.add("scrolled-light");
+        } else {
+          nav.classList.remove("scrolled-light");
+        }
+
+        // 2. Hero Overlay Text fading & sliding up (0 to 50vh of scroll)
+        const heroThreshold = vh * 0.5;
+        if (scrollTop <= heroThreshold) {
+          const heroFraction = scrollTop / heroThreshold;
+          heroOverlay.style.opacity = (1 - heroFraction).toString();
+          heroOverlay.style.transform = `translate(-50%, ${-50 - (heroFraction * 15)}%)`;
+        } else {
+          heroOverlay.style.opacity = "0";
+        }
+
+        // 3. Scroll Frame Index Mapping & Easing calculations
+        if (scrollTop <= animEndScroll) {
+          const fraction = scrollTop / animEndScroll;
+          targetFrame = fraction * (frameCount - 1);
+          introContainer.style.opacity = "1";
+          introContainer.style.pointerEvents = "auto";
+        }
+        // Transition Fade phase (220vh to 300vh): Couple appears in camera lens and is held
+        else if (scrollTop > animEndScroll && scrollTop <= introEndScroll) {
+          targetFrame = frameCount - 1; // Freeze on final frame
+          const fadeFraction = (scrollTop - animEndScroll) / (introEndScroll - animEndScroll);
+
+          // Easing opacity of the intro frame to reveal Photography section
+          introContainer.style.opacity = (1 - fadeFraction).toString();
+          introContainer.style.pointerEvents = "auto";
+        }
+        // Fully scrolled past: hide container completely so click events pass to content below
+        else {
+          targetFrame = frameCount - 1;
+          introContainer.style.opacity = "0";
+          introContainer.style.pointerEvents = "none";
+        }
+      });
+
+      // Canvas Cover Image Fit
+      function drawImageProp(ctx, img, x, y, w, h, offsetX = 0.5, offsetY = 0.5) {
+        const iw = img.width;
+        const ih = img.height;
+        const r = Math.min(w / iw, h / ih);
+        let nw = iw * r;
+        let nh = ih * r;
+        let cx = 0, cy = 0, cw = iw, ch = ih, ar = 1;
+
+        if (nw < w) ar = w / nw;
+        if (Math.abs(nh - h) < 0.00001 && ar < 1) ar = h / nh;
+        nw *= ar;
+        nh *= ar;
+
+        cw = iw / (nw / w);
+        ch = ih / (nh / h);
+
+        cx = (iw - cw) * offsetX;
+        cy = (ih - ch) * offsetY;
+
+        if (cx < 0) cx = 0;
+        if (cy < 0) cy = 0;
+        if (cw > iw) cw = iw;
+        if (ch > ih) ch = ih;
+
+        ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+      }
+
+      // Responsive Canvas Setup
+      function resizeCanvas() {
+        if (!canvas) return;
+        const dpr = window.devicePixelRatio || 1;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+
+        context.scale(dpr, dpr);
+        renderFrame();
+      }
+
+      // Rendering Single Image frame
+      function renderFrame() {
+        let idx = Math.round(currentFrame);
+        // If the exact frame didn't load, walk outward to the nearest loaded one.
+        if (!(images[idx] && images[idx].complete && images[idx].naturalWidth > 0)) {
+          let found = -1;
+          for (let d = 1; d < frameCount; d++) {
+            const lo = idx - d, hi = idx + d;
+            if (images[lo] && images[lo].complete && images[lo].naturalWidth > 0) { found = lo; break; }
+            if (images[hi] && images[hi].complete && images[hi].naturalWidth > 0) { found = hi; break; }
+          }
+          if (found === -1) return;
+          idx = found;
+        }
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        drawImageProp(context, images[idx], 0, 0, window.innerWidth, window.innerHeight);
+      }
+
+      // Manage poetic subtitles states
+      function updateSubtitles(fraction) {
+        subtitles.forEach(sub => {
+          if (fraction >= sub.min && fraction <= sub.max) {
+            sub.el.classList.add("active");
+          } else {
+            sub.el.classList.remove("active");
+          }
+        });
+      }
+
+      // Main Loop
+      function animateLoop() {
+        if (!animationStarted) return;
+
+        const diff = targetFrame - currentFrame;
+        if (Math.abs(diff) < 0.001) {
+          currentFrame = targetFrame;
+        } else {
+          currentFrame += diff * 0.12; // Decelerating inertia
+        }
+
+        renderFrame();
+
+        // Update poetic texts based on current animation frame index
+        const currentFraction = currentFrame / (frameCount - 1);
+        updateSubtitles(currentFraction);
+
+        requestAnimationFrame(animateLoop);
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      preloadImages();
+    });
+  </script>
+</body>
+
+</html>

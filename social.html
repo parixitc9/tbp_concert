@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add(("startViewTransition" in document) ? "vt-native" : "vt-fallback");</script>
+  <title>Social Events — The Brown Print</title>
+  <meta name="description"
+    content="Birthdays, anniversaries, engagements and family milestones — joyful event films and photos by The Brown Print, Toronto." />
+  <meta name="theme-color" content="#f0fdfa" />
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230c0a09'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%23f59e0b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/enhancements.css" />
+  <link rel="stylesheet" href="css/tbp-transition.css" />
+  <script id="tbp-arriving-init">try{if(sessionStorage.getItem("tbp-wipe"))document.documentElement.classList.add("tbp-arriving");}catch(e){}</script>
+</head>
+
+<body data-theme="social" class="social-page">
+  <div class="grain"></div>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo bebas">THE BROWN PRINT</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="wedding.html" class="nav-link">Weddings</a>
+        <a href="music.html" class="nav-link">Music</a>
+        <a href="concerts.html" class="nav-link">Concerts</a>
+        <a href="social.html" class="nav-link active">Social</a>
+        <a href="brands.html" class="nav-link">Brands</a>
+        <button class="nav-cta" onclick="openProject('social')">Start a Project</button>
+      </div>
+      <button class="nav-burger" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+      </button>
+    </div>
+    <div class="nav-mobile">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="wedding.html" class="nav-link">Weddings</a>
+      <a href="music.html" class="nav-link">Music</a>
+      <a href="concerts.html" class="nav-link">Concerts</a>
+      <a href="social.html" class="nav-link active">Social</a>
+      <a href="brands.html" class="nav-link">Brands</a>
+      <button class="nav-cta" onclick="openProject('social')">Start a Project</button>
+    </div>
+  </nav>
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="page-hero soc-hero">
+    <div class="glow"></div>
+    <div class="page-hero-inner">
+      <div class="divider-row">
+        <div class="divider-line" style="background:rgba(13,148,136,0.4);"></div>
+        <span class="kicker soc-label">Social Events</span>
+        <div class="divider-line" style="background:rgba(13,148,136,0.4);"></div>
+      </div>
+      <h1 class="serif">Every <span class="accent">celebration</span>, captured</h1>
+      <p>Birthdays, anniversaries, engagements and family milestones — joyful films and photos that hold the warmth of
+        the day for years to come.</p>
+    </div>
+  </section>
+
+  <!-- ============ EVENTS GRID ============ -->
+  <section class="work-section soc-section">
+    <div class="wrap">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:2rem;">
+        <span class="soc-label"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5.8 11.3 2 22l10.7-3.79" />
+            <path d="M4 3h.01M22 8h.01M15 2h.01M22 20h.01" />
+            <path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L12 14l4.5 4.5 4.04-1.95c.84-.16 1.44-.9 1.44-1.76v-.38c0-.88.77-1.55 1.63-1.45a2.9 2.9 0 0 0 3.12-1.96L22 2Z" />
+          </svg></span>
+        <span class="work-label soc-label">Recent Celebrations</span>
+      </div>
+      <div class="work-grid" id="socialGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ CONFETTI MARQUEE ============ -->
+  <section class="soc-confetti">
+    <div class="soc-confetti-track bebas" id="socConfetti"></div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta soc-cta">
+    <span style="display:inline-flex;color:var(--coral-500);margin-bottom:1.25rem;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5.8 11.3 2 22l10.7-3.79" />
+        <path d="M4 3h.01M22 8h.01M15 2h.01M22 20h.01" />
+        <path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L12 14l4.5 4.5 4.04-1.95c.84-.16 1.44-.9 1.44-1.76v-.38c0-.88.77-1.55 1.63-1.45a2.9 2.9 0 0 0 3.12-1.96L22 2Z" />
+      </svg>
+    </span>
+    <h2 class="serif">Got something to celebrate?</h2>
+    <p>From a first birthday to a golden anniversary, let us turn your special day into a film you'll replay for years.</p>
+    <button class="btn btn-teal" onclick="openProject('social')">
+      Start a Social Project <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <span class="footer-logo bebas">THE BROWN PRINT</span>
+          <p>A Punjabi-rooted studio in Canada crafting cinematic weddings, music albums, and concert films.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="wedding.html">Weddings</a>
+          <a href="music.html">Music Albums</a>
+          <a href="concerts.html">Concerts</a>
+          <a href="social.html">Social Events</a>
+          <a href="brands.html">Brands</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <a href="mailto:hello@thebrownprint.ca"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m22 7-10 5L2 7" />
+            </svg> hello@thebrownprint.ca</a>
+          <a href="tel:+14165550199"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+            </svg> +1 (416) 555-0199</a>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg> Toronto, Canada</span>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <button class="btn btn-amber" onclick="openProject()">Start a Project <svg width="16" height="16"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg></button>
+        <p class="copy">© 2026 The Brown Print · Crafted with intention</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- confetti marquee content (tripled so it loops seamlessly) -->
+  <script>
+    (function () {
+      const items = ["BIRTHDAYS", "ANNIVERSARIES", "ENGAGEMENTS", "GRADUATIONS", "FAMILY PARTIES"];
+      const track = document.getElementById("socConfetti");
+      if (track) {
+        const all = [...items, ...items, ...items];
+        track.innerHTML = all.map(t => `<span>${t} ·</span>`).join("");
+      }
+    })();
+  </script>
+  <script src="content.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/enhance.js"></script>
+  <script src="js/tbp-transition.js"></script>
+</body>
+
+</html>
